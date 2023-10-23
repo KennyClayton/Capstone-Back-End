@@ -19,18 +19,20 @@ const toggleNavbar = () => setOpen(!open);
 
 return (
     <div>
-    <Navbar color="light" light fixed="true" expand="lg">
+    <Navbar color="info" light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
         📚 👷 DudeWorkIt 🔨 🎓 
         </NavbarBrand>
         {loggedInUser ? (
         <>
-            <NavbarToggler onClick={toggleNavbar} />
+            {/* <NavbarToggler onClick={toggleNavbar} /> */}
             <Collapse isOpen={open} navbar>
             <Nav navbar></Nav>
             </Collapse>
             <Button
-            color="primary"
+            color="light"
+            outline
+            size="md"
             onClick={(e) => {
                 e.preventDefault();
                 setOpen(false);

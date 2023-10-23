@@ -4,11 +4,12 @@ using DudeWorkIt.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace DudeWorkIt.Data;
-public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkItDbContext inherits from the IdentityDbContext<IdentityUser> class, rather than from DbContext
-//# IdentityDbContext comes with a number of extra models and tables that will be added to the database. They include:
-//# IdentityUser - this will hold login credentials for users
-//# IdentityRole - this will hold the various roles that a user can have
-//# IdentityUserRole - a many-to-many table between roles and users. These define which users have which roles.
+public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> 
+    //# DudeWorkItDbContext inherits from the IdentityDbContext<IdentityUser> class, rather than from DbContext
+        //# IdentityDbContext comes with a number of extra models and tables that will be added to the database. They include:
+        //# IdentityUser - this will hold login credentials for users
+        //# IdentityRole - this will hold the various roles that a user can have
+        //# IdentityUserRole - a many-to-many table between roles and users. These define which users have which roles.
 
 {
     private readonly IConfiguration _configuration;
@@ -26,164 +27,195 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkI
     {
         base.OnModelCreating(modelBuilder); //# this is a method
 
-        modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole //# seeding the database with the identityrole information
+        modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole[] //# seeding the database with the identityrole information
+        {
+        new IdentityRole
         {
             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
             Name = "Admin",
             NormalizedName = "admin"
-        }
+        },
+        new IdentityRole
         {
             Id = "3bc7a629-88b1-4d36-8f2e-48a7969ad5da",
             Name = "Worker",
             NormalizedName = "worker"
-        }
+        },
+        new IdentityRole
         {
             Id = "9008fba6-93a0-412d-bc99-84a6cafb2be5",
             Name = "Customer",
             NormalizedName = "customer"
-        }
+        }}
         );
 
         // "Represents user accounts, such as individual workers or customers."
-        modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser //# seeding the database with the identityuser information
+        modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser[] //# seeding the database with the identityuser information
         {
-            Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
-            UserName = "Administrator",
-            Email = "admina@strator.comx",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
-        }
-        {
-            Id = "6f36bd3b-f3b7-4815-ba2a-3788a8469028",
-            UserName = "TToney",
-            Email = "tyler@toney.com",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
-        }
-        {
-            Id = "5389ca0b-0fb5-4ed0-8de5-27143f289661",
-            UserName = "GHilbert",
-            Email = "garrett@hilbert.com",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
-        }
-        {
-            Id = "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d",
-            UserName = "CoryC",
-            Email = "cory@cotton.com",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
-        }
-        {
-            Id = "1ee32cf6-e93c-49df-9696-97e2378d2181",
-            UserName = "CobyC",
-            Email = "coby@cotton.com",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
-        }
-        {
-            Id = "89e2d93c-f59c-44ad-a2ce-890617777f07",
-            UserName = "CJones",
-            Email = "cody@jones.com",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
-        }
-        {
-            Id = "68c01fff-1c37-4fe5-be33-d2f86f716361",
-            UserName = "Panda",
-            Email = "panda@monium.com",
-            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+        new IdentityUser
+            {
+                Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
+                UserName = "Administrator",
+                Email = "admina@strator.comx",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            },
+        new IdentityUser
+            {
+                Id = "6f36bd3b-f3b7-4815-ba2a-3788a8469028",
+                UserName = "TToney",
+                Email = "tyler@toney.com",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            },
+            new IdentityUser
+            {
+                Id = "5389ca0b-0fb5-4ed0-8de5-27143f289661",
+                UserName = "GHilbert",
+                Email = "garrett@hilbert.com",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            },
+            new IdentityUser
+            {
+                Id = "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d",
+                UserName = "CoryC",
+                Email = "cory@cotton.com",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            },
+            new IdentityUser
+            {
+                Id = "1ee32cf6-e93c-49df-9696-97e2378d2181",
+                UserName = "CobyC",
+                Email = "coby@cotton.com",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            },
+            new IdentityUser
+            {
+                Id = "89e2d93c-f59c-44ad-a2ce-890617777f07",
+                UserName = "CJones",
+                Email = "cody@jones.com",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            },
+            new IdentityUser
+            {
+                Id = "68c01fff-1c37-4fe5-be33-d2f86f716361",
+                UserName = "Panda",
+                Email = "panda@monium.com",
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
+            }
         }
         );
 
-        modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+        modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>[]
         {
-            RoleId = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
-            UserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f"
+            new IdentityUserRole<string>
+            {
+                RoleId = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
+                UserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f"
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "3bc7a629-88b1-4d36-8f2e-48a7969ad5da", //~ worker role Id
+                UserId = "6f36bd3b-f3b7-4815-ba2a-3788a8469028" // Tyler Toney
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
+                UserId = "5389ca0b-0fb5-4ed0-8de5-27143f289661" // Garrett Hilbert
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
+                UserId = "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d" // Cory Cotton
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
+                UserId = "1ee32cf6-e93c-49df-9696-97e2378d2181" // Coby Cotton
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
+                UserId = "89e2d93c-f59c-44ad-a2ce-890617777f07" // Cody Jones
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "3bc7a629-88b1-4d36-8f2e-48a7969ad5da", //~ worker role Id
+                UserId = "68c01fff-1c37-4fe5-be33-d2f86f716361" // Panda Monium
+            }
         }
-        {
-            RoleId = "3bc7a629-88b1-4d36-8f2e-48a7969ad5da", //~ worker role Id
-            UserId = "6f36bd3b-f3b7-4815-ba2a-3788a8469028" // Tyler Toney
-        }
-        {
-            RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
-            UserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f" // Garrett Hilbert
-        }
-        {
-            RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
-            UserId = "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d" // Cory Cotton
-        }
-        {
-            RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
-            UserId = "1ee32cf6-e93c-49df-9696-97e2378d2181" // Coby Cotton
-        }
-        {
-            RoleId = "9008fba6-93a0-412d-bc99-84a6cafb2be5", //$ customer role Id
-            UserId = "89e2d93c-f59c-44ad-a2ce-890617777f07" // Cody Jones
-        }
-        {
-            RoleId = "3bc7a629-88b1-4d36-8f2e-48a7969ad5da", //~ worker role Id
-            UserId = "68c01fff-1c37-4fe5-be33-d2f86f716361" // Panda Monium
-        }
-        
         );
-        modelBuilder.Entity<UserProfile>().HasData(new UserProfile
+
+        modelBuilder.Entity<UserProfile>().HasData(new UserProfile[]
         {
-            Id = 1,
-            FirstName = "Admina",
-            LastName = "Strator",
-            Address = "101 Main Street",
-            UserName = "Administrator",
-            Email = "admina@strator.comx",
-            IdentityUserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
-        },
-        {
-            Id = 2,
-            FirstName = "Tyler",
-            LastName = "Toney",
-            Address = "202 Broad Street",
-            UserName = "TToney",
-            IdentityUserId = "6f36bd3b-f3b7-4815-ba2a-3788a8469028"
-            Email = "tyler@toney.com"
-        },
-        {
-            Id = 3,
-            FirstName = "Garrett",
-            LastName = "Hilbert",
-            Address = "303 Frisco Blvd",
-            UserName = "GHilbert",
-            IdentityUserId = "5389ca0b-0fb5-4ed0-8de5-27143f289661",
-            Email = "garrett@hilbert.com"
-        }
-        {
-            Id = 4,
-            FirstName = "Cory",
-            LastName = "Cotton",
-            Address = "2110 Gulf ROad",
-            UserName = "CoryC",
-            IdentityUserId = "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d",
-            Email = "cory@cotton.com"
-        }
-        {
-            Id = 5,
-            FirstName = "Coby",
-            LastName = "Cotton",
-            Address = "1300 Atlantic Blvd",
-            UserName = "CobyC",
-            IdentityUserId = "1ee32cf6-e93c-49df-9696-97e2378d2181",
-            Email = "coby@cotton.com"
-        }
-        {
-            Id = 6,
-            FirstName = "Cody",
-            LastName = "Jones",
-            Address = "1450 Terrace View Lane",
-            UserName = "CJones",
-            IdentityUserId = "89e2d93c-f59c-44ad-a2ce-890617777f07",
-            Email = "cody@jones.com"
-        }
-        {
-            Id = 7,
-            FirstName = "Panda",
-            LastName = "Monium",
-            Address = "1600 Mascot Circle",
-            UserName = "Panda",
-            IdentityUserId = "68c01fff-1c37-4fe5-be33-d2f86f716361",
-            Email = "panda@monium.com"
+            new UserProfile
+            {
+                Id = 1,
+                FirstName = "Admina",
+                LastName = "Strator",
+                Address = "101 Main Street",
+                UserName = "Administrator",
+                IdentityUserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
+                Email = "admina@strator.comx"
+            },
+            new UserProfile
+            {
+                Id = 2,
+                FirstName = "Tyler",
+                LastName = "Toney",
+                Address = "202 Broad Street",
+                UserName = "TToney",
+                IdentityUserId = "6f36bd3b-f3b7-4815-ba2a-3788a8469028",
+                Email = "tyler@toney.com"
+            },
+            new UserProfile
+            {
+                Id = 3,
+                FirstName = "Garrett",
+                LastName = "Hilbert",
+                Address = "303 Frisco Blvd",
+                UserName = "GHilbert",
+                IdentityUserId = "5389ca0b-0fb5-4ed0-8de5-27143f289661",
+                Email = "garrett@hilbert.com"
+            },
+            new UserProfile
+            {
+                Id = 4,
+                FirstName = "Cory",
+                LastName = "Cotton",
+                Address = "2110 Gulf ROad",
+                UserName = "CoryC",
+                IdentityUserId = "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d",
+                Email = "cory@cotton.com"
+            },
+            new UserProfile
+            {
+                Id = 5,
+                FirstName = "Coby",
+                LastName = "Cotton",
+                Address = "1300 Atlantic Blvd",
+                UserName = "CobyC",
+                IdentityUserId = "1ee32cf6-e93c-49df-9696-97e2378d2181",
+                Email = "coby@cotton.com"
+            },
+            new UserProfile
+            {
+                Id = 6,
+                FirstName = "Cody",
+                LastName = "Jones",
+                Address = "1450 Terrace View Lane",
+                UserName = "CJones",
+                IdentityUserId = "89e2d93c-f59c-44ad-a2ce-890617777f07",
+                Email = "cody@jones.com"
+            },
+            new UserProfile
+            {
+                Id = 7,
+                FirstName = "Panda",
+                LastName = "Monium",
+                Address = "1600 Mascot Circle",
+                UserName = "Panda",
+                IdentityUserId = "68c01fff-1c37-4fe5-be33-d2f86f716361",
+                Email = "panda@monium.com"
+            }
         }
         );
 
@@ -196,7 +228,7 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkI
                 ProjectTypeId = 1, // lawn maintenance
                 DateOfProject = new DateTime(2023, 11, 12, 11, 0, 0), //! this should be selected by the customer user when creating a project
                 CompletedOn = null,
-                Notes = "Mulch the flower beds and mow the yard"
+                Description = "Mulch the flower beds and mow the yard"
                 },
             new Project
             {
@@ -205,7 +237,7 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkI
                 ProjectTypeId = 2, // painting
                 DateOfProject = new DateTime(2023, 11, 12, 14, 0, 0), // 2pm
                 CompletedOn = null,
-                Notes = "My garage needs to be painted. It's about 24 x 24 and I have all the paint and supplies. I can pay $15/hour."
+                Description = "My garage needs to be painted. It's about 24 x 24 and I have all the paint and supplies. I can pay $15/hour."
                 },
             new Project
             {
@@ -214,7 +246,7 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkI
                 ProjectTypeId = 3, // moving
                 DateOfProject = new DateTime(2023, 11, 13, 9, 0, 0), // 9am
                 CompletedOn = null,
-                Notes = "I need help loading a moving truck"
+                Description = "I need help loading a moving truck"
                 },
             new Project
             {
@@ -223,11 +255,10 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkI
                 ProjectTypeId = 8, // junk removal
                 DateOfProject = new DateTime(2023, 11, 14, 11, 30, 0), // 11:30am
                 CompletedOn = null,
-                Notes = "Need to haul away a bunch of old furniture"
-                },
-            
-           
+                Description = "Need to haul away a bunch of old furniture"
+                }
         });
+
         modelBuilder.Entity<ProjectType>().HasData(new ProjectType[]
         {
             new ProjectType {Id = 1, Name = "Lawn Maintenance"},
@@ -241,28 +272,29 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser> //# DudeWorkI
             new ProjectType {Id = 9, Name = "Organizing"},
             new ProjectType {Id = 10, Name = "Volunteer"}
         });
+
         modelBuilder.Entity<ProjectAssignment>().HasData(new ProjectAssignment[] //^ This class assigns a WORKER UserProfileId to a project. Remember that customers create the projects so their UserProfileId is already associated with each project.
         {
-            new ProjectAssignment 
+            new ProjectAssignment
             {
                 Id = 1,
                 UserProfileId = 2, // Tyler is the worker that will get this job
                 ProjectId = 1
-                
+
             },
             new ProjectAssignment
             {
                 Id = 2,
                 UserProfileId = null, // no worker set to this job yet
                 ProjectId = 2
-                
+
             },
             new ProjectAssignment
             {
                 Id = 3,
                 UserProfileId = null, // no worker set to this job yet
                 ProjectId = 3
-                
+
             },
             new ProjectAssignment
             {

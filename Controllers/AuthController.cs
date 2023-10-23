@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using DudeWorkIt.Models;
 using DudeWorkIt.Data;
-
+ 
 namespace DudeWorkIt.Controllers;
 
 
@@ -96,7 +96,7 @@ public class AuthController : ControllerBase
 //# "This (below) is an endpoint from the AuthController that gets the userProfile for a logged in user (a common use case that most front-end applications need). The [Authorize] attribute on this method tells the framework to require a cookie in order to access this resource. A request without a cookie will get an automatic 401 response. The User property is inherited from ControllerBase, and contains all of the data from the cookie (each of the "claims"). In this case, this method is getting the user Id (to look up the user's UserProfile) as well as all of the roles for that user."
 
     [HttpGet("Me")]
-    [Authorize]
+    // [Authorize]
     public IActionResult Me()
     {
         var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);

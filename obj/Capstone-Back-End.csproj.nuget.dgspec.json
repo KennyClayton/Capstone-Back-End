@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End\\Capstone-Back-End.csproj": {}
+    "c:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End\\Capstone-Back-End.csproj": {
+    "c:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End\\Capstone-Back-End.csproj",
+        "projectUniqueName": "c:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End.csproj",
         "projectName": "Capstone-Back-End",
-        "projectPath": "C:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End\\Capstone-Back-End.csproj",
+        "projectPath": "c:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End.csproj",
         "packagesPath": "C:\\Users\\kenny\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End\\obj\\",
+        "outputPath": "c:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kenny\\AppData\\Roaming\\NuGet\\NuGet.Config"

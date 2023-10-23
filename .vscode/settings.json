@@ -3,5 +3,9 @@
         "activityBar.background": "#600325",
         "titleBar.activeBackground": "#860534",
         "titleBar.activeForeground": "#FFFBFD"
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "",
+        "textMateRules": []
     }
 }
