@@ -7,11 +7,10 @@ import {
     Button,
   } from "reactstrap";
   
-//! The Card Title is not showing up. 
 
 
-
-  export default function ProjectCard({ project, FullName, setDetailsProjectId }) {
+  export default function ProjectCard({ project, setDetailsProjectId }) {
+    
     return (
       <Card body color="info" outline style={{ marginBottom: "8px" }}>
         <CardBody>

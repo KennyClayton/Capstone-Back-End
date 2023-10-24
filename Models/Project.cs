@@ -10,4 +10,5 @@ public class Project
     public DateTime DateOfProject { get; set; }
     public DateTime? CompletedOn { get; set; }
     public string Description { get; set; }
+
 }

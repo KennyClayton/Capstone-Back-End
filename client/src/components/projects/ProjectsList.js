@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
-import { getProjects } from "../../managers/projectManager";
+import { getProjects, getUserProjects } from "../../managers/projectManager";
 import { getUsers } from "../../managers/userProfileManager";
 
 export default function ProjectList({ setDetailsProjectId }) {
   const [projects, setProjects] = useState([]); // When the page loads, the "projects" variable gets filled with a list of all projects. How? Because the useEffect below says to run the getAllProjects function. We ARE NOT displaying these projects yet. We are just getting them at the outset here and STORING them in the "projects" variable. How did "projects" variable get filled up? with the getAllProjects function below.
-  const [userProfiles, setUserProfiles] = useState([]); // Same here as above. userProfiles is storing all user profiles right now.
-  
-  const getAllProjects = () => {
+  const [userProfiles, setUserProfiles] = useState([]); // Same here as above. userProfiles is storing all user profiles once the useEffect below runs.
+  const [projectsByUserId, setProjectsByUserId] = useState([]); 
+  // IMPORTANT - This projectsByUserId variable gets filled up with a list of projects. How? when the useEffect runs, it will call the getAllProjectsByUserId function. That function is defined above the useEffect. Look at that getAllProjectsByUserId function and you will see that it calls ANOTHER function "getUserProjects" that we defined and imported from projectManager.js.
+  // VERY IMPORTANT - This is where we connect front and back end. The "getUserProjects" function in projectManager.js says to GET data from the server. But where on the server? At the "/user-projects" endpoint. How do we know the server has an endpoint with that name "user-projects"? Because we defined one in ProjectController.cs
+
+
+
+  const getAllProjects = () => { // define what happens when getAllProjects function is called. It will run the fetProjects function and then it will set the state of "projects". 
+    //* IMPORTANT - The getProjects function is defined in projectManager.js. But the function is called here below. 
     getProjects().then(setProjects);
   };
 
@@ -15,35 +21,31 @@ export default function ProjectList({ setDetailsProjectId }) {
     getUsers().then(setUserProfiles);
   };
 
-  // We already have "projects" and "userProfiles" as variables above, holding all projects and users. But now we can implement a hook (a useEffect) to update that "projects" variable at any time, or just when this ProjectsList.js component mounts. Since we just want the useEffect to set 
+  const getAllProjectsByUserId = () => { // define this function. When the function runs, what happens?
+    getUserProjects().then(setProjectsByUserId) // When it runs, this function will get projects by a user's Id that matches the projects UserProfileId.
+  }
+
+// Can I get a list of all project assignments? The relationship between a Project object and a Worker is the project.Id and the projectAssignment.projectId. Garrett is not directly associated with a project assignment. Only Tyler is. So Garrett is associated with a projectassignment via his 
+
+  // We already have "projects" and "userProfiles" as variables above. Recall that we set the initial states of those to empty arrays. We want to now run the useEffect which will call these functions and fill those variables above with all projects and users. This useEffect is called a React "hook". Again, this will update that "projects" variable when the useEffect runs. When is that? When this ProjectsList.js component mounts. Since we just want the useEffect to set state at the initial rendering of this component, we will NOT put any dependency into the empty array at the end of this useEffect. 
   useEffect(() => {
     getAllProjects();
     getAllUserProfiles();
+    getAllProjectsByUserId();
   }, []);
 
-  return (
-    
+  return (    
     <>
       <h2>Your Projects</h2>
-      {projects.map((project) => {
-        // Find the user profile corresponding to this project
-        const userProfile = userProfiles.find(up => up.Id === project.UserProfileId);
-        if (userProfile) {
-          // console.log("UserProfile:", userProfile);
-
-          return (
-            
+      {projectsByUserId.map((project) => (         
             <ProjectCard
               project={project}
+              // workerUserProfileId={project.workerUserProfileId} // Add workerUserProfileId prop
               setDetailsProjectId={setDetailsProjectId}
               key={`project-${project.id}`}
             >
-            </ProjectCard>
-            
-          );
-        }
-        return null; // Handle the case when no matching user profile is found
-      })}
+            </ProjectCard>            
+          ))}
     </>
   );
 }

@@ -13,15 +13,7 @@ import ProjectDetails from "./projects/ProjectDetails";
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
     <Routes>
-      <Route path="/"> 
-      <Route
-          path="login" // when the url ends with /login then display the "Login" component and run setLoggedInUser function
-          element={<Login setLoggedInUser={setLoggedInUser} />}
-        />
-        <Route
-          path="register"
-          element={<Register setLoggedInUser={setLoggedInUser} />}
-        />
+      <Route path="/">
         <Route
           index
           element={
@@ -29,6 +21,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               <Projects />
             </AuthorizedRoute>
           }
+        />
+      <Route
+          path="login" // when the url ends with /login then display the "Login" component and run setLoggedInUser function
+          element={<Login setLoggedInUser={setLoggedInUser} />}
+        />
+        <Route
+          path="register"
+          element={<Register setLoggedInUser={setLoggedInUser} />}
         />
         <Route
           path="details"
