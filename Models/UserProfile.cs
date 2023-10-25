@@ -18,6 +18,7 @@ public class UserProfile
     [NotMapped] // not mapped means that EF Core won't create column for this property in the db
     public List<string> Roles { get; set; }
     public List<ProjectAssignment> ProjectAssignments { get; set; }
+    
     [NotMapped] // Computed property (not stored in the database)
     public string FullName
     {

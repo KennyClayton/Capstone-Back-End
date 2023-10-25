@@ -9,16 +9,33 @@ export const getProjectById = (id) => {
   return fetch(`${apiUrl}/${id}`).then((res) => res.json());
 };
 
-//~ Define a function that will fetch all project types from the database
+//^GET - Define a function that will fetch all project types from the database
 export const getProjectTypes = () => {
   return fetch(apiUrlTypes).then((res) => res.json());
 };
 
-// at the "/user-projects" endoint, the server should give us a list of projects related to the signed-in user's id
+//^ GET - at the "/user-projects" endoint, the server should give us a list of projects related to the signed-in user's id
 export const getUserProjects = () => {
   return fetch(apiUrl + "/user-projects").then((res) => res.json());
 };
 
+//^ POST - Create a new project
+export const createProject = (project) => {
+  return fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(project),
+  }).then((res) => res.json);
+};
+
+//^ DELETE - Function to delete a project by Id
+export const deleteProjectById = (id) => {
+  return fetch(`${apiUrl}/${id}`, {
+    method: "DELETE",
+  });
+};
 
 //This is where front and back end connect.
 

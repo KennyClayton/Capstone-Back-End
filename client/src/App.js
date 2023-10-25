@@ -25,7 +25,7 @@ function App() {
     <>
       <NavBar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
       <ApplicationViews
-        loggedInUser={loggedInUser}
+        loggedInUser={loggedInUser}   //* IMPORTANT - We can pass this loddegInUser as a prop to ApplicationViews....AND....we can continue passing it as a prop to any other modules
         setLoggedInUser={setLoggedInUser}
       />
     </>

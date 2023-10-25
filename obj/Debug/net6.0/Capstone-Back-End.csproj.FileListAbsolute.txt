@@ -36,3 +36,5 @@ C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\Capstone-Back
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\ref\Capstone-Back-End.dll
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\Capstone-Back-End.pdb
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\Capstone-Back-End.genruntimeconfig.cache
+c:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\package-lock.json
+c:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\package.json

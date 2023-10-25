@@ -5,7 +5,7 @@ import CreateProject from "./CreateProject"; // this is a component that creates
 
 
 
-export default function Projects() { // this function renders two child components, ProjectList and ProjectDetails
+export default function Projects( {loggedInUser} ) { // this function renders two child components, ProjectList and ProjectDetails. We pass the loggedInUser as an object
   const [detailsProjectId, setDetailsProjectId] = useState(null); 
 
   return (
@@ -15,7 +15,7 @@ export default function Projects() { // this function renders two child componen
           <ProjectList setDetailsProjectId={setDetailsProjectId} />
         </div>
         <div className="col-sm-4">
-        <CreateProject />
+        <CreateProject loggedInUser={loggedInUser}/>
           {/* <ProjectDetails detailsBikeId={detailsProjectId} /> */}
         </div>
       </div>

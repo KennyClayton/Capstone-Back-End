@@ -18,7 +18,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <Projects />
+              <Projects loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
@@ -31,10 +31,10 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={<Register setLoggedInUser={setLoggedInUser} />}
         />
         <Route
-          path="details"
+          path="projects/:id"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ProjectDetails />
+              <ProjectDetails loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
