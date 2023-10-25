@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardTitle, CardSubtitle, CardBody, CardText, Button } from "reactstrap";
 import { deleteProjectById, getProjectById, getProjects } from "../../managers/projectManager";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { format } from 'date-fns';
 
 
@@ -10,7 +10,7 @@ export default function ProjectDetails() {
   const [project, setProject] = useState({}); //set initial state of "project" to an empty object. We will place the selected project object in there with useEffect
   const { id } = useParams(); //capture the project id from the URL
   // const formattedDate = format(new Date(project.dateOfProject), 'MMMM d, yyyy p');
-
+  const navigate = useNavigate();
   // this will go to the server and get a project and set the state of "project" so it holds the matching project we retrieved from the database 
   const getProjectDetails = () => {
     getProjectById(id).then(setProject); 
@@ -22,6 +22,7 @@ export default function ProjectDetails() {
     deleteProjectById(id) // this says, run the deleteThisWorkOrder function on the selected OrderId, which will run the DELETE method on that object in the database
       .then(() => {
         getProjects();
+        navigate("/");
       })
   };
 
