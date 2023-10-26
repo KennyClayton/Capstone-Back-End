@@ -16,7 +16,11 @@ export const getProjectTypes = () => {
 
 //^ GET - at the "/user-projects" endoint, the server should give us a list of projects related to the signed-in user's id
 export const getUserProjects = () => {
-  return fetch(apiUrl + "/user-projects").then((res) => res.json());
+  return fetch(`${apiUrl}/user-projects`).then((res) => res.json());
+};
+
+export const getWorkerProjects = (id) => {
+  return fetch(`${apiUrl}/worker-projects/${id}`).then((res) => res.json());
 };
 
 //^ POST - Create a new project

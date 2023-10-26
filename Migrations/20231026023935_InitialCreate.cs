@@ -225,7 +225,8 @@ namespace Capstone_Back_End.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserProfileId = table.Column<int>(type: "integer", nullable: true),
-                    ProjectId = table.Column<int>(type: "integer", nullable: false)
+                    ProjectId = table.Column<int>(type: "integer", nullable: false),
+                    ProjectTypeId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -236,6 +237,11 @@ namespace Capstone_Back_End.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectAssignments_ProjectTypes_ProjectTypeId",
+                        column: x => x.ProjectTypeId,
+                        principalTable: "ProjectTypes",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProjectAssignments_UserProfiles_UserProfileId",
                         column: x => x.UserProfileId,
@@ -248,9 +254,9 @@ namespace Capstone_Back_End.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3bc7a629-88b1-4d36-8f2e-48a7969ad5da", "b550f6ca-e239-4e51-8380-5af5acee94af", "Worker", "worker" },
-                    { "9008fba6-93a0-412d-bc99-84a6cafb2be5", "bc5a5e5d-ba7e-481f-8568-9f648de64a63", "Customer", "customer" },
-                    { "c3aaeb97-d2ba-4a53-a521-4eea61e59b35", "0de049ea-2ef9-46d5-bbce-b434f09419a8", "Admin", "admin" }
+                    { "3bc7a629-88b1-4d36-8f2e-48a7969ad5da", "6b3821b6-e9b8-49cd-85b2-58ff7c7bb6b6", "Worker", "worker" },
+                    { "9008fba6-93a0-412d-bc99-84a6cafb2be5", "605e00e6-c3f3-462b-a6a5-2a2994d9e28c", "Customer", "customer" },
+                    { "c3aaeb97-d2ba-4a53-a521-4eea61e59b35", "8723815f-6c39-4db8-a3f5-f63ac1a3eaaa", "Admin", "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -258,13 +264,13 @@ namespace Capstone_Back_End.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1ee32cf6-e93c-49df-9696-97e2378d2181", 0, "9240c05c-bc93-4fee-bae2-9c406852f6ac", "coby@cotton.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEHuAdROY0dCFsd7jdR2kIZiI8iDz8NKMhXghAeromhdN5kDmI/eeSeYa0S+9kCTo6w==", null, false, "02cfc02c-ec0a-411d-9d71-443d65bbb490", false, "CobyC" },
-                    { "5389ca0b-0fb5-4ed0-8de5-27143f289661", 0, "4a15a539-48c7-44d6-9564-c4079464b3fc", "garrett@hilbert.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEHdlZdaMXsPTvVrFae5v3fXI4r63kPA3+YneAG3LFdlEVy/VzXJQwqFUnZIP3AEKSQ==", null, false, "f8ab6739-cc42-4ef3-8bda-13a3d11ce0f4", false, "GHilbert" },
-                    { "68c01fff-1c37-4fe5-be33-d2f86f716361", 0, "61b89998-6baa-41a6-868c-336cd1527aba", "panda@monium.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEDNOX9upyWyQJaO/DnvdIadtfPc3DOp4QQW2MrtRqTB28koSopiSl55whsPItMXyow==", null, false, "64f674eb-db98-4bb0-8da2-5ef22c4b323d", false, "Panda" },
-                    { "6f36bd3b-f3b7-4815-ba2a-3788a8469028", 0, "b9f72726-6b43-4660-8248-0f60dfd32524", "tyler@toney.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEMFbDqHjDDc1g1UHPAQA/fq7Dv2j30YNea8XSAbVhpwvd7/u68ygyg/MOQtfuVswLw==", null, false, "c4ea9ac3-3c7e-472b-bb81-e433673dbed8", false, "TToney" },
-                    { "89e2d93c-f59c-44ad-a2ce-890617777f07", 0, "74db890d-b54b-4000-ab4a-80d95bfe7a20", "cody@jones.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEIQm04dgATF5j9UfWBG2jztA04EhlcSBIvlrzhIVhQm4gLRE0/T+c/HxZHiULOTPng==", null, false, "1d30b780-089f-48a8-aad9-c9b8c3a7f2a7", false, "CJones" },
-                    { "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d", 0, "5d770c12-1798-4af1-bef5-4914978340a8", "cory@cotton.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEHZbpjOKZ22h3H/6U82fNzHFhhyObHNnu/Kmb7F6FfKLksuAROQKrSlWs7cJyxMMxg==", null, false, "8cedf8b5-1297-469c-b1e8-baf32c752dc6", false, "CoryC" },
-                    { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "645e83e4-aaf7-4634-95a9-d4912e55a1fc", "admina@strator.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEDVFpvwkTmxTfBPvhk/pkzdSyGE/xEmhNH+CwiodxdTuBjc60ghn6x+HatQupvV19g==", null, false, "c0346d07-7980-4cbd-9e55-ebfef5098aa9", false, "Administrator" }
+                    { "1ee32cf6-e93c-49df-9696-97e2378d2181", 0, "e66238c7-cf5a-4b99-8e2b-20134d8f0cda", "coby@cotton.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEFGdRlCrbgO+2xxQG3bQ2gPaLN9ZQMCkZaL5mkI8ualCP/QGIIJRFul5bzBj21JfBw==", null, false, "b82b7e92-35a8-4513-8cd0-4b5fc76c8d4c", false, "CobyC" },
+                    { "5389ca0b-0fb5-4ed0-8de5-27143f289661", 0, "2849d5fa-113e-417b-b2a1-d8c23946ba02", "garrett@hilbert.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEGqdpm+Pu/lQ/e4iE1xPjGU/8CyzLII+HXcCoR2dz2O6amFXlBs5KDZw1ULutHuF2A==", null, false, "6baae1cc-c440-4b22-8a87-d874ff618a0b", false, "GHilbert" },
+                    { "68c01fff-1c37-4fe5-be33-d2f86f716361", 0, "4b1164c3-67d9-4290-ab9f-224a5dd0d6d2", "panda@monium.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEILVKQZNKkqp7ANf8g4pCqcfO2eusJeGcRaV8ZNFmniCKA6ehVR1cPzw1V1W1YluMQ==", null, false, "50f5a956-d2ef-49a5-8d32-f77194507b7c", false, "Panda" },
+                    { "6f36bd3b-f3b7-4815-ba2a-3788a8469028", 0, "b185931b-05fc-4ffb-9ef8-0dd2d71a9188", "tyler@toney.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEBM3ZRnjJKITnf4BzxJ7dFPysFOs13L6WqVPb3LrTR/ZzKZn10J0qWA8hKpe8/x2CA==", null, false, "212f8098-9409-464d-bcaa-fa2454729171", false, "TToney" },
+                    { "89e2d93c-f59c-44ad-a2ce-890617777f07", 0, "0b8a35d0-5ed8-4618-a92d-6d982d7ccebc", "cody@jones.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEORgJ2UwxWeTkKHw5TX0OzhF86zm2znwGkt5RZsn30XpSTayibWOBL//ptwFbEiGgA==", null, false, "2a7bd7e4-4f2a-4d9d-ab6d-0f210b5248d3", false, "CJones" },
+                    { "bdcf5858-0cac-42d4-8a1b-1caf0e14b92d", 0, "3c204d14-d1ed-4853-ad32-7eebf80aca4b", "cory@cotton.com", false, false, null, null, null, "AQAAAAEAACcQAAAAEH0zs2j+2aXtv7pyuEzykDXy8IkhiyDJZiTP2/5M7Iz+wfbAwXPvgFdHZ1vNfNj0wg==", null, false, "4f0145ba-84b0-4be3-94be-229a33e58b92", false, "CoryC" },
+                    { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "45e1dfba-6240-4bc0-84f5-8b934d1a4e1a", "admina@strator.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAECePZ4mfb0iWRq7+9GTQpwcUT0FBfeMXvB9LTZuvkrCIUYYhvNxuf1qIlIMa5JQ63A==", null, false, "5497efb2-d68f-4409-9377-5631272d78bc", false, "Administrator" }
                 });
 
             migrationBuilder.InsertData(
@@ -325,13 +331,13 @@ namespace Capstone_Back_End.Migrations
 
             migrationBuilder.InsertData(
                 table: "ProjectAssignments",
-                columns: new[] { "Id", "ProjectId", "UserProfileId" },
+                columns: new[] { "Id", "ProjectId", "ProjectTypeId", "UserProfileId" },
                 values: new object[,]
                 {
-                    { 1, 1, 2 },
-                    { 2, 2, null },
-                    { 3, 3, null },
-                    { 4, 4, null }
+                    { 1, 1, null, 2 },
+                    { 2, 2, null, null },
+                    { 3, 3, null, null },
+                    { 4, 4, null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -375,6 +381,11 @@ namespace Capstone_Back_End.Migrations
                 name: "IX_ProjectAssignments_ProjectId",
                 table: "ProjectAssignments",
                 column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectAssignments_ProjectTypeId",
+                table: "ProjectAssignments",
+                column: "ProjectTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectAssignments_UserProfileId",
