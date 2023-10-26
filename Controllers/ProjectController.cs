@@ -25,6 +25,8 @@ public class ProjectController : ControllerBase
     public IActionResult Get() //# this Get method is an endpoint to get all projects
     {
         var projects = _dbContext.Projects
+        .Include(p => p.ProjectAssignments)
+        .ThenInclude(pa => pa.UserProfile)
         .Include(p => p.UserProfile)
         .ToList();
         return Ok(projects);
@@ -48,6 +50,23 @@ public class ProjectController : ControllerBase
         return Ok(project);
     }
 
+    // [HttpGet("worker-projects/{id}")] //# this endpoint on the server is "/api/project/{id}"
+    // // [Authorize(Roles = "Customer")] //! authorize only customers
+    // public IActionResult GetWorkerProjectsByUserId(int id)
+    // {
+    //     var projects = _dbContext.ProjectAssignments
+    //         .Include(p => p.Projects)
+    //         .Include(p => p.ProjectType)
+    //         .Where(p => p.UserProfile.Id == id)
+    //         .ToList();
+    //     if (projects == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     return Ok(projects);
+    // }
+
+    
     //^ GET - Get ONLY the projects where the logged-in user's UserProfile.Id matches the project's UserProfileId
     [HttpGet("user-projects")] //# this endpoint on the server is "/api/project/user-projects"
     // [Authorize(Roles = "Customer")]
@@ -61,23 +80,27 @@ public class ProjectController : ControllerBase
             .Projects
             .Include(p => p.ProjectAssignments)
             .ThenInclude(pa => pa.UserProfile)
-            // .ThenInclude(up => up.FullName)
             .Include(p => p.UserProfile)
             .ThenInclude(up => up.ProjectAssignments)
             .Include(p => p.ProjectType)
             .Where(p => p.UserProfile.IdentityUserId == userId)
             .ToList();
 
-        // var assignments = _dbContext
-        // .ProjectAssignments
-        // .Include(pa => pa.UserProfile)
-        // .Include(pa => pa.Project)
-        // .ToList();
+        // now that we have a list of projects we can shape each project and the properties on it
+        // Modify the projects to include worker's full name
+        var projectsWithWorkerFullNames = projects.Select(p => new
+        {
+            p.UserProfileId,
+            p.Id,
+            p.ProjectType,
+            p.DateOfProject,
+            p.Description,
+            WorkerFullName = p.ProjectAssignments
+                .Select(pa => pa.UserProfile?.FullName) //* Read more about this question mark at the bottom
+                .FirstOrDefault()
+        }).ToList();
 
-        // var matchingProjects = projects.Cast<object>().Concat(assignments.Cast<object>()).ToList();
-        // return Ok(matchingProjects);
-
-        return Ok(projects);
+        return Ok(projectsWithWorkerFullNames);
     }
 
     //^ POST - This endpoint will map to a POST request with the url /api/project
@@ -113,7 +136,7 @@ public class ProjectController : ControllerBase
         return NoContent();
     }
 
-    
+
 }
 
 //^ NEW FOR PROJECT TYPES
@@ -152,3 +175,11 @@ public class ProjectTypeController : ControllerBase
 //* MUY IMPORTANTE!!! On line 62, I am telling the server to look at the userProfile table in the database and to grab any ProjectAssignment objects it sees on the UserProfile table. If we look at the UserProfile class here on the server side, we can see that a List of ProjectAssignments was included in the class/table. So now we can acess those projectAssignment objects here by telling the server to Include UserProfile and ThenInclude the projectAssignments too. 
 //$ Now look at the front end projectManager.js component. In there we defined a function called "getUserProjects". In that function we defined a GET request which is what sends the http GET request to this particular "user-projects" endpoint on the server. 
 //& Remember! The "getUserProjects" function in projectManager.js is DEFINED in the projectManager.js module, but the "getUserProjects" function is not CALLED yet. Go look at the useEffect inside of the ProjectList.js component. You can see that the useEffect calls the getAllProjectsByUserId function which is defined just above th useEffect. Look at that getAllProjectsByUserId function and you will see that this is where "getUserProjects" is finally run and GET request is actually sent to the server at that moment (when the useEffect runs...which is when the ProjectsList component mounts). 
+
+
+//* IMPORTANT - Why did I have to use the question mark on this line of code <.Select(pa => pa.UserProfile?.FullName))>?
+//* Because I am trying to access the FullName property of a UserProfile object, which is null for some of the ProjectAssignments.
+//* Why are some of those FullName properties null? Because some of the projects are not assigned to a worker yet, so the FullName property is empty/null on those projects
+//* SO what does the question mark (aka null conditional operator) do? It checks whether UserProfile is null before accessing the FullName property.
+//* With the null conditional operator (?) after UserProfile, if UserProfile is null for any ProjectAssignment it will return 'null' for WorkerFullName instead of throwing a NullReferenceException.
+//* From Chat GPT: "Make sure to apply this change consistently in your code wherever you are accessing properties of objects that may be null. This will help you handle potential null values and prevent exceptions."

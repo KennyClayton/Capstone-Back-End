@@ -77,19 +77,19 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
         );
     }
 
-    //^GET /api/userprofile/{id}
-    [HttpGet("{id}")]
-    // [Authorize] // no role specified here so that ANY logged in user can access this
+    // //^GET /api/userprofile/{id}
+    // [HttpGet("{id}")]
+    // // [Authorize] // no role specified here so that ANY logged in user can access this
 
-    public IActionResult GetWorkerProfileWithProjects(int id) //? why are we using a string data type on Id property in some foreign keys? I changed it to int here as the parameter
-    {
-        return Ok(_dbContext.UserProfiles
-            .Include(up => up.ProjectAssignments)
-                .ThenInclude(pa => pa.Project)
-            .Include(up => up.ProjectAssignments)
-                .ThenInclude(pa => pa.Project)
-            .SingleOrDefault(up => up.Id == id)); //single out the matching results of the where filter above.
-    }
+    // public IActionResult GetWorkerProfileWithProjects(int id) //? why are we using a string data type on Id property in some foreign keys? I changed it to int here as the parameter
+    // {
+    //     return Ok(_dbContext.UserProfiles
+    //         .Include(up => up.ProjectAssignments)
+    //             .ThenInclude(pa => pa.Project)
+    //         .Include(up => up.ProjectAssignments)
+    //             .ThenInclude(pa => pa.Project)
+    //         .SingleOrDefault(up => up.Id == id)); //single out the matching results of the where filter above.
+    // }
 
 }
 

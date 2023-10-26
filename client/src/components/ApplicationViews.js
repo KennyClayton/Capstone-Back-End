@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"; 
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 
 import { AuthorizedRoute } from "./auth/AuthorizedRoute";
 import Login from "./auth/Login";
@@ -6,11 +6,40 @@ import Register from "./auth/Register";
 import Projects from "./projects/Projects"; // this is a component that creates a list of projects
 import ProjectList from "./projects/ProjectsList";
 import ProjectDetails from "./projects/ProjectDetails";
-
+import { useEffect, useState } from "react";
+import { getProjects, getProjectById } from "../managers/projectManager";
 
 // there are two props being passed through this function: loggedinuser and setloggedinuser
 //? what is a prop?
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
+  const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState(null); // To store the project details
+  const navigate = useNavigate();
+  const { id } = useParams(); // Get the project ID from the URL
+
+  const getAllProjects = () => {
+    getProjects().then(setProjects);
+  };
+
+  // Fetch the project details based on the ID from the URL
+const getProjectDetails = () => {
+  if (id) {
+    getProjectById(id)
+      .then((data) => {
+        console.log("Project details data:", data);
+        setProject(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching project details:", error);
+      });
+  }
+};
+
+  useEffect(() => {
+    getAllProjects();
+    getProjectDetails(); // Fetch project details when the ID changes
+  }, [id]);
+
   return (
     <Routes>
       <Route path="/">
@@ -18,11 +47,13 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <Projects loggedInUser={loggedInUser}/>
+              <Projects 
+              setProject={setProject}
+              loggedInUser={loggedInUser} />
             </AuthorizedRoute>
           }
         />
-      <Route
+        <Route
           path="login" // when the url ends with /login then display the "Login" component and run setLoggedInUser function
           element={<Login setLoggedInUser={setLoggedInUser} />}
         />
@@ -34,7 +65,15 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="projects/:id"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ProjectDetails loggedInUser={loggedInUser}/>
+              {project ? (
+                <ProjectDetails
+                  project={project}
+                  setProject={setProject}
+                  loggedInUser={loggedInUser}
+                />
+              ) : (
+                <p>Loading...</p>
+              )}
             </AuthorizedRoute>
           }
         />
@@ -68,13 +107,8 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             </AuthorizedRoute>
           }
         /> */}
-        
       </Route>
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>
   );
 }
-
-
-//! ISSUE - RENDER PROJECT DETAILS - 10/22/2023
-  //~ I need to complete the ProjectDetails.js component which I have set to render at the url ending with .details (above)
