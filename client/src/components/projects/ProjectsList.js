@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
-import { getProjects, getUserProjects, getWorkerProjects } from "../../managers/projectManager";
-import { getUsers } from "../../managers/userProfileManager";
 
 export default function ProjectList({ setDetailsProjectId, setProject, user, projectsByUserId}) {
 

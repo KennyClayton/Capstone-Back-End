@@ -45,18 +45,23 @@ export default function ProjectDetails({ project, setProject }) {
     setEditedProject({ ...project }); // resets the project object back to original state before the user started trying to edit it.
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     // Send an HTTP request to update the old project object in the database with the newly minted `editedProject`
-    console.log(editedProject)
-
-    updateProject(editedProject) // assuming user made changes, this updateProject function is called and sends the editedProject object to the database
-      .then(() => {
-        // ...then...with the response data in hand...yes, this new object returned to us FROM THE DATABASE is held in the updatedProject variable here...which we need for the next step...
-        getProjectById(id)})
-        .then((updatedProject) => {
-          setProject(updatedProject); // ...now update the state of our "project" variable with the freshly minted project object we saved and got back from the database a moment ago.
-        setIsEditing(false); // Switch back to view mode
-      })
+    // console.log(editedProject)
+    try {
+      await updateProject(editedProject); // assuming user made changes, this updateProject function is called and sends the editedProject object to the database/updates the server
+      // Then, fetch the updated project from the server
+      const updatedProject = await getProjectById(id); // ...then...with the response data in hand...yes, this new object returned to us FROM THE DATABASE is held in the updatedProject variable here...which we need for the next step...
+      // Update the component state with the updated project
+      setProject(updatedProject);
+      // ...now update the state of our "project" variable with the freshly minted project object we saved and got back from the database a moment ago.
+      // Finally, switch back to view mode
+      setIsEditing(false);
+    } catch (error) {
+      // Handle errors
+      console.error("Error updating project:", error);
+      // You might want to set an error state or display a message to the user
+    }
   };
 
   const handleDeleteClick = () => {
@@ -65,32 +70,38 @@ export default function ProjectDetails({ project, setProject }) {
       .then((response) => {
         if (response.status === 204) {
           // Deletion was successful, navigate to the root or home page
-          navigate('/'); // Replace with the correct route
+          navigate("/"); // Replace with the correct route
         } else {
           // Handle errors if needed
         }
       })
       .catch((error) => {
-        console.error('Error deleting project:', error);
+        console.error("Error deleting project:", error);
       });
   };
 
   const handleInputChange = (e) => {
     // as the user is typing, watch for changes in the editable fields below
     // Extract the 'name' and 'value' properties from the event target (the input field)
-    
+
     const { name, value } = e.target;
 
-  if (name === "projectType") {
-    // Retrieve the entire projectType object, not just the ID
-    const selectedProjectType = projectTypes.find((pt) => pt.id === parseInt(value));
-    setEditedProject({ ...editedProject, [name]: selectedProjectType });
-  } else {
-    setEditedProject({ ...editedProject, [name]: value });
-  }
-};
+    if (name === "projectType") {
+      // Retrieve the entire projectType object, not just the ID
+      const selectedProjectType = projectTypes.find(
+        (pt) => pt.id === parseInt(value)
+      );
+      setEditedProject({ ...editedProject, [name]: selectedProjectType });
+    } else {
+      setEditedProject({ ...editedProject, [name]: value });
+    }
+  };
 
-//^ ----------- VIEW MODE -----------//^
+  const handleMyProjectsButton = () => {
+    navigate("/");
+  };
+
+  //^ ----------- VIEW MODE -----------//^
 
   const renderViewMode = (
     <>
@@ -103,20 +114,22 @@ export default function ProjectDetails({ project, setProject }) {
       >
         <CardBody>
           <CardTitle tag="h4">Project Details</CardTitle>
-          <CardTitle tag="h6" style={{borderColor: "black", fontWeight: "bold",}}>{project.projectType.name}</CardTitle>
+          <CardTitle
+            tag="h6"
+            style={{ borderColor: "black", fontWeight: "bold" }}
+          >
+            {project.projectType.name}
+          </CardTitle>
           <CardSubtitle>
-            Worker:
-            {" "}
+            Worker:{" "}
             {project.workerFullName ? project.workerFullName : "Unassigned"}
           </CardSubtitle>
           <CardSubtitle>
-            Project Date:
-            {" "}
+            Project Date:{" "}
             {format(new Date(project.dateOfProject), "MMMM d, yyyy p")}
           </CardSubtitle>
           <CardSubtitle>
-            Date Completed:
-            {" "}
+            Date Completed:{" "}
             {project.completedOn ? (
               project.completedOn
             ) : (
@@ -124,29 +137,40 @@ export default function ProjectDetails({ project, setProject }) {
             )}
           </CardSubtitle>
           <CardSubtitle>
-            Project Description: 
-            {" "}
-            {project.description}
+            Project Description: {project.description}
           </CardSubtitle>
         </CardBody>
         <div className="justify-content-between">
-          <Button onClick={handleEditClick} color="info">
+          <Button
+            onClick={handleEditClick}
+            style={{ marginLeft: "1rem" }}
+            outline
+            color="info"
+          >
             Edit Project
           </Button>
           <Button
             onClick={() => handleDeleteClick(id)}
+            outline
             color="danger"
             style={{ marginLeft: "8px" }}
           >
             Delete Project
+          </Button>
+          <Button
+            onClick={handleMyProjectsButton}
+            outline
+            color="secondary"
+            style={{ marginLeft: "8px" }}
+          >
+            My Projects
           </Button>
         </div>
       </Card>
     </>
   );
 
-
-//^ ----------- EDIT MODE -----------//^
+  //^ ----------- EDIT MODE -----------//^
 
   const renderEditMode = (
     <div>
