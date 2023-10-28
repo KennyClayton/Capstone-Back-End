@@ -47,6 +47,8 @@ export default function ProjectDetails({ project, setProject }) {
 
   const handleSaveClick = () => {
     // Send an HTTP request to update the old project object in the database with the newly minted `editedProject`
+    console.log(editedProject)
+
     updateProject(editedProject) // assuming user made changes, this updateProject function is called and sends the editedProject object to the database
       .then(() => {
         // ...then...with the response data in hand...yes, this new object returned to us FROM THE DATABASE is held in the updatedProject variable here...which we need for the next step...
@@ -76,9 +78,22 @@ export default function ProjectDetails({ project, setProject }) {
   const handleInputChange = (e) => {
     // as the user is typing, watch for changes in the editable fields below
     // Extract the 'name' and 'value' properties from the event target (the input field)
+    
     const { name, value } = e.target;
-    // below, take each updated property's value from the user's input and store it in the editedProject shallow copy variable and then set the state of editedProject with those new property values
-    setEditedProject({ ...editedProject, [name]: value });
+    //store the id of the project's property.id
+//     if (name === "projectType")
+//     // store the user-entered value of the property type.id as an integer by parsing it into an integer
+//   {
+//     setEditedProject({ ...editedProject, [name]: parseInt(value) });
+//     console.log(editedProject)
+    
+//  }    // below, take each updated property's value from the user's input and store it in the editedProject shallow copy variable and then set the state of editedProject with those new property values
+//     else {
+      setEditedProject({ ...editedProject, [name]: value });
+      console.log(editedProject)
+      console.log("name did not equal projectType")
+
+    // };
   };
 
 //^ ----------- VIEW MODE -----------//^

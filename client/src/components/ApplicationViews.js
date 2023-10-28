@@ -36,9 +36,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
     <Routes>
       <Route path="/">
-        <Route
+        <Route 
           index
-          element={
+          element={ 
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <Projects 
               setProject={setProject} 
