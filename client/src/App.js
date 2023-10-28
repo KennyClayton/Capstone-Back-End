@@ -25,7 +25,7 @@ function App() {
     <>
       <NavBar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
       <ApplicationViews
-        loggedInUser={loggedInUser}   //* IMPORTANT - We can pass this loddegInUser as a prop to ApplicationViews....AND....we can continue passing it as a prop to any other modules
+        loggedInUser={loggedInUser}   //* IMPORTANT - We can pass this loddegInUser as a prop to ApplicationViews....AND....we can continue passing it as a prop to any other modules. In other words, from any parent module to any child module
         setLoggedInUser={setLoggedInUser}
       />
     </>
@@ -36,7 +36,7 @@ export default App;
 
 
 //~ NOTES:
-  //$ The browser will read the code top to bottom. It reads index.html first, which refers to index.js "root" which refers to this file App.js which is the "entry point" for the whole application. This App.js file starts the cascade of all other files used in building the application.
+  //$ The browser will read the code top to bottom. It reads index.html first, which refers to index.js "root" which refers to this file App.js which is the "entry point" for the whole application. This App.js file starts the cascade of all other files used in building the application and rendering its components to the DOM.
   //$ The first function here in App.js is tryGetLoggedInUser
       //^ tryGetLoggedInUser function is called by the useEffect hook, which "attempts to get the currently logged-in user by calling tryGetLoggedInUser() and sets the loggedInUser state based on the result. This ensures that the user's authentication status is checked when the component is mounted."
     //@ MODULE JUMP to authManager.js where the tryGetLoggedInUser function is defined. It makes a fetch call to the API (back end).

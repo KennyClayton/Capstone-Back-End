@@ -227,7 +227,7 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
                 UserProfileId = 3, //! Garrett is a customer creating this project, but I also need to associate this project with a worker when the worker chooses to work this project
                 ProjectTypeId = 1, // lawn maintenance
                 DateOfProject = new DateTime(2023, 11, 12, 11, 0, 0), //! this should be selected by the customer user when creating a project
-                CompletedOn = null,
+                CompletedOn = new DateTime(2023, 11, 12, 14, 0, 0),
                 Description = "Mulch the flower beds and mow the yard"
                 },
             new Project
@@ -235,8 +235,8 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
                 Id = 2,
                 UserProfileId = 4, // customer Cory Cotton
                 ProjectTypeId = 2, // painting
-                DateOfProject = new DateTime(2023, 11, 12, 14, 0, 0), // 2pm
-                CompletedOn = null,
+                DateOfProject = new DateTime(2023, 11, 12, 8, 0, 0), // 2pm
+                CompletedOn = new DateTime(2023, 11, 12, 16, 0, 0),
                 Description = "My garage needs to be painted. It's about 24 x 24 and I have all the paint and supplies. I can pay $15/hour."
                 },
             new Project
@@ -256,6 +256,15 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
                 DateOfProject = new DateTime(2023, 11, 14, 11, 30, 0), // 11:30am
                 CompletedOn = null,
                 Description = "Need to haul away a bunch of old furniture"
+                },
+                new Project
+            {
+                Id = 5,
+                UserProfileId = 6, // customer Cody Jones
+                ProjectTypeId = 7, // junk removal
+                DateOfProject = new DateTime(2023, 11, 14, 11, 30, 0), // 11:30am
+                CompletedOn = null,
+                Description = "I think my gutters are clogged, and they ain't gonna clean themselves. Hurry up."
                 }
         });
 
@@ -285,7 +294,7 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
             new ProjectAssignment
             {
                 Id = 2,
-                UserProfileId = null, // no worker set to this job yet
+                UserProfileId = 7, // Panda is the worker that will get this job
                 ProjectId = 2
 
             },
@@ -301,6 +310,12 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
                 Id = 4,
                 UserProfileId = null, // no worker set to this job yet
                 ProjectId = 4
+            },
+            new ProjectAssignment
+            {
+                Id = 5,
+                UserProfileId = 2, // Tyler is the worker that will get this job
+                ProjectId = 5
             }
         });
     }

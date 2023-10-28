@@ -58,3 +58,5 @@ return (
     </div>
 );
 }
+
+//$ Note that we conditionally rendered the nav bar based on whether they are a loggedinUser (line 26)

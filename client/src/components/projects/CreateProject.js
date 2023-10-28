@@ -15,9 +15,7 @@ import { createProject, getProjectTypes } from "../../managers/projectManager";
 // import { useNavigate } from "react-router-dom";
 
 export default function CreateProject({ loggedInUser, projectData, setProjectData, handleSubmit, selectedProjectType, setSelectedProjectType }) {
-  //   const navigate = useNavigate();
-  const [projectTypes, setProjectTypes] = useState([]);
-  
+  const [projectTypes, setProjectTypes] = useState([]);  
 
   // Fetch project types from the API when the component mounts
   // we imported getProjectTypes function from projectManager.js which is what does the HTTP Get request for us and returns the project types in a list. SO once this useEffect runs, the projectTypes variable State is that it holds a list of project types.
@@ -31,8 +29,6 @@ export default function CreateProject({ loggedInUser, projectData, setProjectDat
     clone[name] = value;
     setProjectData(clone);
   };
-
-  
 
   return (
     <div>
@@ -63,7 +59,7 @@ export default function CreateProject({ loggedInUser, projectData, setProjectDat
             <FormGroup>
               <Label for="dateOfProject">Date of Project</Label>
               <Input
-                type="date"
+                type="datetime-local"
                 name="dateOfProject"
                 id="dateOfProject"
                 value={projectData.dateOfProject}
