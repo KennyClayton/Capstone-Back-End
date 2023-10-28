@@ -80,21 +80,15 @@ export default function ProjectDetails({ project, setProject }) {
     // Extract the 'name' and 'value' properties from the event target (the input field)
     
     const { name, value } = e.target;
-    //store the id of the project's property.id
-//     if (name === "projectType")
-//     // store the user-entered value of the property type.id as an integer by parsing it into an integer
-//   {
-//     setEditedProject({ ...editedProject, [name]: parseInt(value) });
-//     console.log(editedProject)
-    
-//  }    // below, take each updated property's value from the user's input and store it in the editedProject shallow copy variable and then set the state of editedProject with those new property values
-//     else {
-      setEditedProject({ ...editedProject, [name]: value });
-      console.log(editedProject)
-      console.log("name did not equal projectType")
 
-    // };
-  };
+  if (name === "projectType") {
+    // Retrieve the entire projectType object, not just the ID
+    const selectedProjectType = projectTypes.find((pt) => pt.id === parseInt(value));
+    setEditedProject({ ...editedProject, [name]: selectedProjectType });
+  } else {
+    setEditedProject({ ...editedProject, [name]: value });
+  }
+};
 
 //^ ----------- VIEW MODE -----------//^
 

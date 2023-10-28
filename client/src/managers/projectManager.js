@@ -50,7 +50,21 @@ export const updateProject = (project) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(project),
-  }).then((res) => res.json());
+  }).then((res) => {
+    //go back here 3 more undos if this doesn't work
+    if (res.status === 204) {
+      // Successful response, no content
+      return;
+    }
+    if (!res.ok) {
+      // Handle non-OK status codes
+      throw new Error(`Request failed with status: ${res.status}`);
+    }
+    return res.json();
+  })
+  .catch((error) => {
+    console.error('Error in updateProject:', error);
+  });
 }
 
 //This is where front and back end connect.
