@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import ProjectList from "./ProjectsList";
-import ProjectDetails from "./ProjectDetails";
 import CreateProject from "./CreateProject"; // this is a component that creates a list of projects
-import {
-  createProject,
-  getUserProjects,
-  getWorkerProjects,
-} from "../../managers/projectManager";
+import {createProject, getUserProjects, getWorkerProjects,} from "../../managers/projectManager";
 import { set } from "date-fns";
 
 export default function Projects({ loggedInUser, setProject }) {
   // this function renders two child components, ProjectList and ProjectDetails. We pass the loggedInUser as an object
   const [detailsProjectId, setDetailsProjectId] = useState(null);
-  const [projectsByUserId, setProjectsByUserId] = useState([]);
+
+  const [projectsByUserId, setProjectsByUserId] = useState([]);    // IMPORTANT - This projectsByUserId variable gets filled up with a list of projects. How? when the useEffect runs, it will call the getAllProjectsByUserId function. That function is defined above the useEffect. Look at that getAllProjectsByUserId function and you will see that it calls ANOTHER function "getUserProjects" that we defined and imported from projectManager.js.
+  // VERY IMPORTANT - This is where we connect front and back end. The "getUserProjects" function in projectManager.js says to GET data from the server. But where on the server? At the "/user-projects" endpoint. How do we know the server has an endpoint with that name "user-projects"? Because we defined one in ProjectController.cs
+
   const [selectedProjectType, setSelectedProjectType] = useState("");
   // Here, useState initializes the state of projectData with these three properties and values
   const [projectData, setProjectData] = useState({
@@ -24,7 +22,7 @@ export default function Projects({ loggedInUser, setProject }) {
   const getAllProjectsByWorkerId = () => {
     getWorkerProjects(loggedInUser.id).then(setProjectsByUserId);
   };
-  const getAllProjectsByUserId = () => {
+  const getAllProjectsByUserId = () => { 
     // define this function. When the function runs, what happens?
     getUserProjects().then(setProjectsByUserId); // When it runs, this function will get projects by a user's Id that matches the projects UserProfileId.
   };

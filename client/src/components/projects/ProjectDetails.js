@@ -1,62 +1,215 @@
-import { Card, CardTitle, CardSubtitle, CardBody, CardText, Button } from "reactstrap";
-import { deleteProjectById, getProjectById, getProjects } from "../../managers/projectManager";
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardTitle,
+  CardSubtitle,
+  CardBody,
+  CardText,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
+import {
+  deleteProjectById,
+  getProjectById,
+  getProjectTypes,
+  getProjects,
+  updateProject,
+} from "../../managers/projectManager";
 import { useParams, useNavigate } from "react-router-dom";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-
-
-export default function ProjectDetails({project, setProject}) {
-  // const [project, setProject] = useState({}); //set initial state of "project" to an empty object. We will place the selected project object in there with useEffect
-  const { id } = useParams(); //capture the project id from the URL
-  // const formattedDate = format(new Date(project.dateOfProject), 'MMMM d, yyyy p');
+export default function ProjectDetails({ project, setProject }) {
+  // use the project and setProject as props from ApplicationViews so any changes there and here don't conflict.
+  const { id } = useParams();
   const navigate = useNavigate();
-  // this will go to the server and get a project and set the state of "project" so it holds the matching project we retrieved from the database 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedProject, setEditedProject] = useState({ ...project }); // initially set "editedProject" to a shallow copy of the "project" object with all its properties. A shallow copy is like a new object exactly the same as the original one from the database, just a COPY of it though. So any changes made to editedProject won't directly affect the original project prop.
+  const [projectTypes, setProjectTypes] = useState([]);
 
+  useEffect(() => {
+    // we have access to all the project types objects in the "projectTypes" variable
+    getProjectTypes().then((data) => setProjectTypes(data));
+  }, []);
 
-  // this fucntion will do two things: It will call the deleteProjectById function and it will then get all projects
-  const deleteProject = (id) => {
-    // Send an HTTP DELETE request to delete the work order
-    deleteProjectById(id) // this says, run the deleteThisWorkOrder function on the selected OrderId, which will run the DELETE method on that object in the database
+  const handleEditClick = () => {
+    // when edit button is clicked, this sets it to true, which switches the user's view to the edititable fields
+    setIsEditing(true);
+  };
+
+  const handleCancelClick = () => {
+    // when cancel button is clicked, this sets to false, which switches the view back to viewMode (by running the renderViewMode function below)
+    setIsEditing(false);
+    setEditedProject({ ...project }); // resets the project object back to original state before the user started trying to edit it.
+  };
+
+  const handleSaveClick = () => {
+    // Send an HTTP request to update the old project object in the database with the newly minted `editedProject`
+    updateProject(editedProject) // assuming user made changes, this updateProject function is called and sends the editedProject object to the database
       .then(() => {
-        getProjects();
-        navigate("/");
+        // ...then...with the response data in hand...yes, this new object returned to us FROM THE DATABASE is held in the updatedProject variable here...which we need for the next step...
+        getProjectById(id)})
+        .then((updatedProject) => {
+          setProject(updatedProject); // ...now update the state of our "project" variable with the freshly minted project object we saved and got back from the database a moment ago.
+        setIsEditing(false); // Switch back to view mode
       })
   };
 
+  const handleDeleteClick = () => {
+    // Perform the deletion operation here
+    deleteProjectById(project.id)
+      .then((response) => {
+        if (response.status === 204) {
+          // Deletion was successful, navigate to the root or home page
+          navigate('/'); // Replace with the correct route
+        } else {
+          // Handle errors if needed
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting project:', error);
+      });
+  };
 
-  //Now that we have the project object that matches the one the user clicked on.... we can reference the "project" variable from the UseState...we can use the state of the project variable to do something with that project object. What do we want to do? We want to display the details of that project in our jsx that renders to the project's details page 
-console.log({project})
-  if (!project) {
-    return (
-      <>
-        <h2>Project Details</h2>
-        <p>Please choose a project...</p>
-      </>
-    );
-  }
-  return (
+  const handleInputChange = (e) => {
+    // as the user is typing, watch for changes in the editable fields below
+    // Extract the 'name' and 'value' properties from the event target (the input field)
+    const { name, value } = e.target;
+    // below, take each updated property's value from the user's input and store it in the editedProject shallow copy variable and then set the state of editedProject with those new property values
+    setEditedProject({ ...editedProject, [name]: value });
+  };
+
+//^ ----------- VIEW MODE -----------//^
+
+  const renderViewMode = (
     <>
-      {/* <h2>Project Details</h2> */}
-      <br></br>
-      <Card body color="info" outline style={{ marginBottom: "8px" }}>
+      <Card
+        body
+        color="info"
+        outline
+        style={{ marginBottom: "8px", maxWidth: "600px" }}
+        className="m-4"
+      >
         <CardBody>
-          <CardTitle tag="h5">Project Details</CardTitle>
-          <CardSubtitle>Project Id: {project.id}</CardSubtitle>
-          <CardSubtitle>Worker: {project.workerFullName ? project.workerFullName : "Unassigned"} </CardSubtitle>
-          <CardText>Project Date: {(new Date (project.dateOfProject)).toLocaleString()}</CardText>
-          <CardText>Project Description: {project.description}</CardText>
+          <CardTitle tag="h4">Project Details</CardTitle>
+          <CardTitle tag="h6" style={{borderColor: "black", fontWeight: "bold",}}>{project.projectType.name}</CardTitle>
+          <CardSubtitle>
+            Worker:
+            {" "}
+            {project.workerFullName ? project.workerFullName : "Unassigned"}
+          </CardSubtitle>
+          <CardSubtitle>
+            Project Date:
+            {" "}
+            {format(new Date(project.dateOfProject), "MMMM d, yyyy p")}
+          </CardSubtitle>
+          <CardSubtitle>
+            Date Completed:
+            {" "}
+            {project.completedOn ? (
+              project.completedOn
+            ) : (
+              <span className="text-muted">Not yet completed</span>
+            )}
+          </CardSubtitle>
+          <CardSubtitle>
+            Project Description: 
+            {" "}
+            {project.description}
+          </CardSubtitle>
         </CardBody>
-        <div className="d-flex justify-content-between">
-
-        <Button>Edit Project</Button>
-        <Button
-        onClick={() => deleteProject(id)}
-          color="danger"
-          style={{ marginLeft: "8px" }} // Add left margin for spacing
-        >
-          Delete Project</Button>
-      </div>
+        <div className="justify-content-between">
+          <Button onClick={handleEditClick} color="info">
+            Edit Project
+          </Button>
+          <Button
+            onClick={() => handleDeleteClick(id)}
+            color="danger"
+            style={{ marginLeft: "8px" }}
+          >
+            Delete Project
+          </Button>
+        </div>
       </Card>
     </>
   );
+
+
+//^ ----------- EDIT MODE -----------//^
+
+  const renderEditMode = (
+    <div>
+      <Card
+        body
+        color="info"
+        outline
+        style={{ marginBottom: "8px", maxWidth: "600px" }}
+        className="m-4"
+      >
+        <CardBody>
+          <Form>
+            <FormGroup>
+              <Label for="projectType">Project Type</Label>
+              <Input
+                type="select"
+                name="projectType"
+                id="projectType"
+                value={editedProject.projectType.id}
+                onChange={handleInputChange}
+              >
+                <option value="">Select a project type</option>
+                {projectTypes.map((projectType) => (
+                  <option key={projectType.id} value={projectType.id}>
+                    {projectType?.name}
+                  </option>
+                ))}
+              </Input>
+            </FormGroup>
+
+            <FormGroup>
+              <Label for="dateOfProject">Date of Project</Label>
+              <Input
+                type="datetime-local"
+                name="dateOfProject"
+                id="dateOfProject"
+                value={editedProject.dateOfProject}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+
+            <Label for="description">Project Description</Label>
+            <Input
+              type="text"
+              name="description"
+              id="description"
+              value={editedProject.description}
+              onChange={handleInputChange}
+            />
+          </Form>
+          <div className="justify-content-between">
+            <Button
+              onClick={handleSaveClick}
+              color="info"
+              outline
+              style={{ marginTop: "1rem" }}
+            >
+              Save
+            </Button>
+            <Button
+              onClick={handleCancelClick}
+              color="danger"
+              outline
+              style={{ marginTop: "1rem", marginLeft: "1rem" }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </CardBody>
+      </Card>
+    </div>
+  );
+
+  return <div>{isEditing ? renderEditMode : renderViewMode}</div>;
 }

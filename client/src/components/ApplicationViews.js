@@ -1,10 +1,9 @@
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 
 import { AuthorizedRoute } from "./auth/AuthorizedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Projects from "./projects/Projects"; // this is a component that creates a list of projects
-import ProjectList from "./projects/ProjectsList";
 import ProjectDetails from "./projects/ProjectDetails";
 import { useEffect, useState } from "react";
 import { getProjects, getProjectById } from "../managers/projectManager";
@@ -12,9 +11,8 @@ import { getProjects, getProjectById } from "../managers/projectManager";
 // there are two props being passed through this function: loggedinuser and setloggedinuser
 //? what is a prop?
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
-  const [projects, setProjects] = useState([]);
-  const [project, setProject] = useState(null); // To store the project details
-  const navigate = useNavigate();
+  const [projects, setProjects] = useState([]); // When the page loads, the "projects" variable gets filled with a list of all projects. How? Because the useEffect below says to run the getAllProjects function. We ARE NOT displaying these projects yet. We are just getting them at the outset here and STORING them in the "projects" variable. How did "projects" variable get filled up? with the getAllProjects function below.
+  const [project, setProject] = useState(null); // unlike above, this one is used for holding a single project in the project variable (see it used on line 26 or so when setProject is called, which sets the state of project with a single project)
   const { id } = useParams(); // Get the project ID from the URL
 
   const getAllProjects = () => {
@@ -22,18 +20,13 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   };
 
   // Fetch the project details based on the ID from the URL
-const getProjectDetails = () => {
-  if (id) {
-    getProjectById(id)
-      .then((data) => {
-        console.log("Project details data:", data);
+  const getProjectDetails = () => {
+    if (id) {
+      getProjectById(id).then((data) => {
         setProject(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching project details:", error);
       });
-  }
-};
+    }
+  };
 
   useEffect(() => {
     getAllProjects();
@@ -48,7 +41,7 @@ const getProjectDetails = () => {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <Projects 
-              setProject={setProject}
+              setProject={setProject} 
               loggedInUser={loggedInUser} />
             </AuthorizedRoute>
           }
@@ -81,8 +74,8 @@ const getProjectDetails = () => {
         "The Route group create two routes for workorders. 
         The route marked index will match to workorders with no extra url segments. 
         The create route will match /workorders/create." */}
-        <Route path="workorders">
-          {/* <Route
+        {/* <Route path="workorders"> */}
+        {/* <Route
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
@@ -90,7 +83,7 @@ const getProjectDetails = () => {
               </AuthorizedRoute>
             }
           /> */}
-          {/* <Route
+        {/* <Route
             path="create"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
@@ -98,7 +91,7 @@ const getProjectDetails = () => {
               </AuthorizedRoute>
             }
           /> */}
-        </Route>
+        {/* </Route> */}
         {/* <Route
           path="employees"
           element={

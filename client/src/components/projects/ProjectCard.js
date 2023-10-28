@@ -21,11 +21,11 @@ export default function ProjectCard({
       <CardBody>
         <CardTitle tag="h5">{project.projectType.name}</CardTitle>
         <CardText>
-          <div>
+          <br></br>
             Project Date: {new Date(project.dateOfProject).toLocaleString()}
-          </div>
-          <div>Worker: {project.workerFullName ? project.workerFullName : "Unassigned"}</div>
-          <div>Project Description: "{project.description}"</div>
+          <br></br>    
+          Worker: {project.workerFullName ? project.workerFullName : "Unassigned"}
+
         </CardText>
 
         <Button

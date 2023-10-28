@@ -4,26 +4,18 @@ import { getProjects, getUserProjects, getWorkerProjects } from "../../managers/
 import { getUsers } from "../../managers/userProfileManager";
 
 export default function ProjectList({ setDetailsProjectId, setProject, user, projectsByUserId}) {
-  const [projects, setProjects] = useState([]); // When the page loads, the "projects" variable gets filled with a list of all projects. How? Because the useEffect below says to run the getAllProjects function. We ARE NOT displaying these projects yet. We are just getting them at the outset here and STORING them in the "projects" variable. How did "projects" variable get filled up? with the getAllProjects function below.
-  const [userProfiles, setUserProfiles] = useState([]); // Same here as above. userProfiles is storing all user profiles once the useEffect below runs.
-  // IMPORTANT - This projectsByUserId variable gets filled up with a list of projects. How? when the useEffect runs, it will call the getAllProjectsByUserId function. That function is defined above the useEffect. Look at that getAllProjectsByUserId function and you will see that it calls ANOTHER function "getUserProjects" that we defined and imported from projectManager.js.
-  // VERY IMPORTANT - This is where we connect front and back end. The "getUserProjects" function in projectManager.js says to GET data from the server. But where on the server? At the "/user-projects" endpoint. How do we know the server has an endpoint with that name "user-projects"? Because we defined one in ProjectController.cs
-
-
-
-
 
   return (    
     <>
       <h2>Your Projects</h2>
-      {projectsByUserId.map((project) => (         
+      {projectsByUserId.map((project) => (
             <ProjectCard
               project={project}
               setProject={setProject}
               setDetailsProjectId={setDetailsProjectId}
               key={`project-${project.id}`}
             >
-            </ProjectCard>            
+            </ProjectCard>          
           ))}
     </>
   );

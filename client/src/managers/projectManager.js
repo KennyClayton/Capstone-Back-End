@@ -19,6 +19,7 @@ export const getUserProjects = () => {
   return fetch(`${apiUrl}/user-projects`).then((res) => res.json());
 };
 
+
 export const getWorkerProjects = (id) => {
   return fetch(`${apiUrl}/worker-projects/${id}`).then((res) => res.json());
 };
@@ -40,6 +41,17 @@ export const deleteProjectById = (id) => {
     method: "DELETE",
   });
 };
+
+//^ UPDATE - Function to update a project
+export const updateProject = (project) => {
+  return fetch(`${apiUrl}/${project.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(project),
+  }).then((res) => res.json());
+}
 
 //This is where front and back end connect.
 

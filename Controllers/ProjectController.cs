@@ -66,7 +66,7 @@ public class ProjectController : ControllerBase
     //     return Ok(projects);
     // }
 
-    
+
     //^ GET - Get ONLY the projects where the logged-in user's UserProfile.Id matches the project's UserProfileId
     [HttpGet("user-projects")] //# this endpoint on the server is "/api/project/user-projects"
     // [Authorize(Roles = "Customer")]
@@ -94,6 +94,7 @@ public class ProjectController : ControllerBase
             p.Id,
             p.ProjectType,
             p.DateOfProject,
+            p.CompletedOn,
             p.Description,
             WorkerFullName = p.ProjectAssignments
                 .Select(pa => pa.UserProfile?.FullName) //* Read more about this question mark at the bottom
@@ -136,6 +137,30 @@ public class ProjectController : ControllerBase
         return NoContent();
     }
 
+//^ PUT - Update/Edit the details of a project
+    [HttpPut("{id}")]
+    // [Authorize(Roles = "Customer")]
+    public IActionResult UpdateProject(Project project, int id)
+    {
+        // find the project by Id and store it in a variable
+        Project projectToUpdate = _dbContext.Projects
+        // .Include(p => p.ProjectType)
+        .SingleOrDefault(p => p.Id == id);
+        if (projectToUpdate == null)
+        {
+            return NotFound();
+        }
+        else if (id != project.Id)
+        {
+            return BadRequest();
+        }
+        projectToUpdate.ProjectType = project.ProjectType; 
+        projectToUpdate.DateOfProject = project.DateOfProject;
+        projectToUpdate.Description = project.Description; // the new description value will go into the project.Description value
+
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
 
 }
 
