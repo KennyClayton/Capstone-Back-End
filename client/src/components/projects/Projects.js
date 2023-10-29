@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import ProjectList from "./ProjectsList";
 import CreateProject from "./CreateProject"; // this is a component that creates a list of projects
-import {createProject, getUserProjects, getWorkerProjects,} from "../../managers/projectManager";
+import {
+  createProject,
+  getUserProjects,
+  getWorkerProjectAssignments,
+  getProjectAssignments,
+} from "../../managers/projectManager";
 import { set } from "date-fns";
+import ListOfAssignedProjects from "./AssignedProjectsList";
 
-export default function Projects({ loggedInUser, setProject }) {
+export default function Projects({ loggedInUser, setProject, project }) {
   // this function renders two child components, ProjectList and ProjectDetails. We pass the loggedInUser as an object
   const [detailsProjectId, setDetailsProjectId] = useState(null);
-
-  const [projectsByUserId, setProjectsByUserId] = useState([]);    // IMPORTANT - This projectsByUserId variable gets filled up with a list of projects. How? when the useEffect runs, it will call the getAllProjectsByUserId function. That function is defined above the useEffect. Look at that getAllProjectsByUserId function and you will see that it calls ANOTHER function "getUserProjects" that we defined and imported from projectManager.js.
+  const [projectsByUserId, setProjectsByUserId] = useState([]); // IMPORTANT - This will be a list of Customer projects. This projectsByUserId variable gets filled up with a list of projects (which only have Customer UserProfiles). How? when the useEffect runs, it will call the getAllProjectsByUserId function. That function is defined above the useEffect. Look at that getAllProjectsByUserId function and you will see that it calls ANOTHER function "getUserProjects" that we defined and imported from projectManager.js.
   // VERY IMPORTANT - This is where we connect front and back end. The "getUserProjects" function in projectManager.js says to GET data from the server. But where on the server? At the "/user-projects" endpoint. How do we know the server has an endpoint with that name "user-projects"? Because we defined one in ProjectController.cs
 
   const [selectedProjectType, setSelectedProjectType] = useState("");
@@ -19,10 +24,31 @@ export default function Projects({ loggedInUser, setProject }) {
     description: "",
   });
 
-  const getAllProjectsByWorkerId = () => {
-    getWorkerProjects(loggedInUser.id).then(setProjectsByUserId);
+  //~ ---------- BELOW handles getting and setting ALL ProjectAssignments ---------- //~
+  const [projectAssignments, setProjectAssignments] = useState([]); // manage state of the list of ALL project assignments
+
+  const getAllProjectAssignments = () => {
+    getProjectAssignments().then(setProjectAssignments);
   };
-  const getAllProjectsByUserId = () => { 
+  useEffect(() => {
+    getAllProjectAssignments();
+  }, []);
+
+  //~ ---------- ABOVE handles getting and setting ALL ProjectAssignments ---------- //~
+
+  //~ ---------- BELOW handles getting and setting ProjectAssignments by Id ---------- //~
+  const [projectAssignmentsByUserId, setprojectAssignmentsByUserId] = useState([]); // manage the state of projectAssignments by Id
+
+  const getProjectAssignmentsByUserId = () => {
+    getWorkerProjectAssignments(loggedInUser.id).then(setprojectAssignmentsByUserId);
+  };
+
+  useEffect(() => { // set the state of the list of projectAssignments by Id
+    getProjectAssignmentsByUserId();
+  }, [loggedInUser.roles]);
+  //~ ---------- ABOVE handles getting and setting ProjectAssignments by Id ---------- //~
+
+  const getAllProjectsByUserId = () => {
     // define this function. When the function runs, what happens?
     getUserProjects().then(setProjectsByUserId); // When it runs, this function will get projects by a user's Id that matches the projects UserProfileId.
   };
@@ -53,26 +79,65 @@ export default function Projects({ loggedInUser, setProject }) {
 
   // We already have "projects" and "userProfiles" as variables above. Recall that we set the initial states of those to empty arrays. We want to now run the useEffect which will call these functions and fill those variables above with all projects and users. This useEffect is called a React "hook". Again, this will update that "projects" variable when the useEffect runs. When is that? When this ProjectsList.js component mounts. Since we just want the useEffect to set state at the initial rendering of this component, we will NOT put any dependency into the empty array at the end of this useEffect.
   useEffect(() => {
-    // if (user.roles && user.roles.includes("Worker")) { //make sure user.roles exists AND the user is a worker, then do ....
-    //   console.log("isworker")
-    //   getAllProjectsByWorkerId();
-    // }
     getAllProjectsByUserId();
   }, [loggedInUser.roles]);
 
+  //^--------------- conditionally render based on the user ---------------//^
+
+  if (
+    Array.isArray(loggedInUser.roles) &&
+    loggedInUser.roles.includes("Customer")
+  ) {
+    console.log(loggedInUser);
+
+    //~ -------------------------- CUSTOMER ROUTE -------------------------- //~
+
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <ProjectList
+              projectsByUserId={projectsByUserId}
+              setProject={setProject}
+              setDetailsProjectId={setDetailsProjectId}
+              user={loggedInUser}
+            />
+          </div>
+          <div className="col-sm-4">
+            <CreateProject
+              loggedInUser={loggedInUser}
+              projectData={projectData}
+              setProjectData={setProjectData}
+              handleSubmit={handleSubmit}
+              selectedProjectType={selectedProjectType}
+              setSelectedProjectType={setSelectedProjectType}
+            />
+            {/* <ProjectDetails detailsBikeId={detailsProjectId} /> */}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  //^--------------- conditionally render based on the user ---------------//^
+  //~ -------------------------- WORKER ROUTE -------------------------- //~
   return (
     <div className="container">
       <div className="row">
         <div className="col-sm-6">
-          <ProjectList
-            projectsByUserId={projectsByUserId}
-            setProject={setProject}
+          <ListOfAssignedProjects
+            //need to generate projectAssignmentsByUserId and pass as a prop
+            projectAssignmentsByUserId={projectAssignmentsByUserId}
+            //need to setAssignedProjects and pass as a prop
+            setprojectAssignmentsByUserId={setprojectAssignmentsByUserId}
+            //need to setDetailsAssignedProjectId
             setDetailsProjectId={setDetailsProjectId}
-            user={loggedInUser}
+            //KEEP THE USER PASSED AS A PROP
+            loggedInUser={loggedInUser}
+            project={project}
           />
         </div>
-        <div className="col-sm-4">
-          <CreateProject
+        {/* <div className="col-sm-4">
+          <ListOfUnAssignedProjects
             loggedInUser={loggedInUser}
             projectData={projectData}
             setProjectData={setProjectData}
@@ -80,8 +145,7 @@ export default function Projects({ loggedInUser, setProject }) {
             selectedProjectType={selectedProjectType}
             setSelectedProjectType={setSelectedProjectType}
           />
-          {/* <ProjectDetails detailsBikeId={detailsProjectId} /> */}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   // Fetch the project details based on the ID from the URL
   const getProjectDetails = () => {
     if (id) {
-      getProjectById(id).then((data) => {
+      getProjectById(id).then((data) => { //call the getProjectById function and hand it an id to work with and then that function will run to find a matching project
         setProject(data);
       });
     }
@@ -40,7 +40,8 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={ 
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <Projects 
+              <Projects
+              project={project}
               setProject={setProject} 
               loggedInUser={loggedInUser} />
             </AuthorizedRoute>
