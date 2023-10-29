@@ -196,6 +196,7 @@ public class ProjectAssignmentController : ControllerBase
         var assignments = _dbContext.ProjectAssignments
             .Include(pa => pa.UserProfile)
             .Include(pa => pa.Project)
+                .ThenInclude(p => p.UserProfile)
             .Include(pa => pa.ProjectType)
             .ToList();
         if (assignments == null)
@@ -212,6 +213,7 @@ public class ProjectAssignmentController : ControllerBase
         var workerAssignments = _dbContext.ProjectAssignments
             .Include(pa => pa.UserProfile)
             .Include(pa => pa.Project)
+                .ThenInclude(p => p.UserProfile)
             .Include(pa => pa.ProjectType)
             .Where(pa => pa.UserProfile.Id == id)
             .ToList();

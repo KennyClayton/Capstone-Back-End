@@ -15,7 +15,7 @@ export default function ProjectAssignmentCard({
 //   setDetailsProjectId,
 }) {
   const navigate = useNavigate();
-
+console.log({projectAssignment})
   return (
     <Card body color="info" outline style={{ marginBottom: "8px" }}>
       <CardBody>
@@ -24,7 +24,7 @@ export default function ProjectAssignmentCard({
           <br></br>
             Project Date: {new Date(projectAssignment.project.dateOfProject).toLocaleString()}
           <br></br>    
-          Customer: {project}
+          Customer: {projectAssignment.project.userProfile.fullName}
 
         </CardText>
 
