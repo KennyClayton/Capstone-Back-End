@@ -190,6 +190,7 @@ public class ProjectAssignmentController : ControllerBase
         _dbContext = context;
     }
 //^8 GET - This endpoint will fetch a list of all projectAssignments from the database
+//! NO CURRENT NEED FOR THIS ENDPOINT
     [HttpGet] //# The URL will end with "/api/projectAssignment"
     public IActionResult GetAllProjectAssignments()
     {
@@ -222,6 +223,21 @@ public class ProjectAssignmentController : ControllerBase
             return NotFound();
         }
         return Ok(workerAssignments);
+    }
+
+
+//^10 GET - This endpoint will fetch a list of all projectAssignments with no UserProfile value (unassigned)
+    [HttpGet("unassigned-worker-projects")] //# this endpoint on the server is "/api/projectassignment/unassigned-worker-projects"
+    public IActionResult getAllUnassignedProjectAssignments()
+    {
+        var unassignedProjectAssignments = _dbContext.ProjectAssignments
+            .Include(pa => pa.UserProfile)
+            .Include(pa => pa.Project)
+                .ThenInclude(p => p.UserProfile)
+            .Include(pa => pa.ProjectType)
+            .Where(pa => pa.UserProfile == null)
+            .ToList();
+        return Ok(unassignedProjectAssignments);
     }
 }
 

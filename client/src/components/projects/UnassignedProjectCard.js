@@ -9,13 +9,17 @@ import {
   NavItem,
 } from "reactstrap";
 
-export default function ProjectAssignmentCard({
+export default function UnassignedProjectCard({
     project, projectAssignment,
-    setprojectAssignmentsByUserId
+    setprojectAssignmentsByUserId,
+    unassignedProjectAssignments,
+    setUnassignedProjectAssignments
 //   setDetailsProjectId,
 }) {
   const navigate = useNavigate();
+console.log({unassignedProjectAssignments})
 console.log({projectAssignment})
+
   return (
     <Card body color="info" outline style={{ marginBottom: "8px" }}>
       <CardBody>
@@ -27,7 +31,7 @@ console.log({projectAssignment})
           Customer: {projectAssignment.project.userProfile.fullName}
 
         </CardText>
-
+{/* 
         <Button
         outline
           color="black"
@@ -38,7 +42,7 @@ console.log({projectAssignment})
           onClick={() => {
             setprojectAssignmentsByUserId(projectAssignment);
             // setDetailsProjectId(project.id);
-            navigate(`projects/${projectAssignment.id}`);
+            navigate(`projectassignments/${projectAssignment.id}`);
             window.scrollTo({
               top: 0,
               left: 0,
@@ -47,7 +51,7 @@ console.log({projectAssignment})
           }}
         >
           Show Details
-        </Button>
+        </Button> */}
       </CardBody>
     </Card>
   );

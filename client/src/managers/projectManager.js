@@ -87,6 +87,10 @@ export const getWorkerProjectAssignments = (id) => {
   return fetch(`${apiUrlAssignments}/worker-projects/${id}`).then((res) => res.json());
 };
 
+//^10 GET - Define a function that will fetch a list of projectAssignments where there is NO worker assigned
+export const getAllUnassignedProjectAssignments = () => {
+  return fetch(`${apiUrlAssignments}/unassigned-worker-projects`).then((res) => res.json());
+}
 
 
 

@@ -6,9 +6,11 @@ import {
   getUserProjects,
   getWorkerProjectAssignments,
   getProjectAssignments,
+  getAllUnassignedProjectAssignments,
 } from "../../managers/projectManager";
 import { set } from "date-fns";
 import ListOfAssignedProjects from "./AssignedProjectsList";
+import ListOfUnassignedProjects from "./UnassignedProjectsList";
 
 export default function Projects({ loggedInUser, setProject, project }) {
   // this function renders two child components, ProjectList and ProjectDetails. We pass the loggedInUser as an object
@@ -17,7 +19,7 @@ export default function Projects({ loggedInUser, setProject, project }) {
   // VERY IMPORTANT - This is where we connect front and back end. The "getUserProjects" function in projectManager.js says to GET data from the server. But where on the server? At the "/user-projects" endpoint. How do we know the server has an endpoint with that name "user-projects"? Because we defined one in ProjectController.cs
 
   const [selectedProjectType, setSelectedProjectType] = useState("");
-  // Here, useState initializes the state of projectData with these three properties and values
+  // Here, useState initializes the state of projectData with an object containing these three properties and empty string values
   const [projectData, setProjectData] = useState({
     projectType: "",
     dateOfProject: "",
@@ -33,7 +35,6 @@ export default function Projects({ loggedInUser, setProject, project }) {
   useEffect(() => {
     getAllProjectAssignments();
   }, []);
-
   //~ ---------- ABOVE handles getting and setting ALL ProjectAssignments ---------- //~
 
   //~ ---------- BELOW handles getting and setting ProjectAssignments by Id ---------- //~
@@ -46,7 +47,23 @@ export default function Projects({ loggedInUser, setProject, project }) {
   useEffect(() => { // set the state of the list of projectAssignments by Id
     getProjectAssignmentsByUserId();
   }, [loggedInUser.roles]);
-  //~ ---------- ABOVE handles getting and setting ProjectAssignments by Id ---------- //~
+  //~ ---------- ABOVE handles getting and setting ProjectAssignments Id ---------- //~
+  
+
+
+  //~ ---------- BELOW handles getting and setting unassigned ProjectAssignments ---------- //~
+  const [unassignedProjectAssignments, setUnassignedProjectAssignments] = useState([]); // manage state of this list of unassigned project assignments
+
+  const getUnassignedProjectAssignments = () => {
+    getAllUnassignedProjectAssignments().then(setUnassignedProjectAssignments);
+  };
+  useEffect(() => {
+    getUnassignedProjectAssignments();
+  }, []);
+  
+  //~ ---------- ABOVE handles getting and setting unassigned ProjectAssignments ---------- //~
+
+
 
   const getAllProjectsByUserId = () => {
     // define this function. When the function runs, what happens?
@@ -82,7 +99,7 @@ export default function Projects({ loggedInUser, setProject, project }) {
     getAllProjectsByUserId();
   }, [loggedInUser.roles]);
 
-  //^--------------- conditionally render based on the user ---------------//^
+  //^--------------- conditionally render what customer sees or what worker sees based on the user's role ---------------//^
 
   if (
     Array.isArray(loggedInUser.roles) &&
@@ -90,7 +107,7 @@ export default function Projects({ loggedInUser, setProject, project }) {
   ) {
     console.log(loggedInUser);
 
-    //~ -------------------------- CUSTOMER ROUTE -------------------------- //~
+    //~ -------------------------- CUSTOMER ROUTE DISPLAY -------------------------- //~
 
     return (
       <div className="container">
@@ -119,7 +136,8 @@ export default function Projects({ loggedInUser, setProject, project }) {
     );
   }
   //^--------------- conditionally render based on the user ---------------//^
-  //~ -------------------------- WORKER ROUTE -------------------------- //~
+  //~ -------------------------- WORKER ROUTE DISPLAY -------------------------- //~
+  //$ Displays a list of assigned projects on the left and a list of unassigned projects on the right
   return (
     <div className="container">
       <div className="row">
@@ -129,23 +147,27 @@ export default function Projects({ loggedInUser, setProject, project }) {
             projectAssignmentsByUserId={projectAssignmentsByUserId}
             //need to setAssignedProjects and pass as a prop
             setprojectAssignmentsByUserId={setprojectAssignmentsByUserId}
-            //need to setDetailsAssignedProjectId
-            setDetailsProjectId={setDetailsProjectId}
+            // //need to setDetailsAssignedProjectId
+            // setDetailsProjectId={setDetailsProjectId}
             //KEEP THE USER PASSED AS A PROP
             loggedInUser={loggedInUser}
             project={project}
           />
         </div>
-        {/* <div className="col-sm-4">
-          <ListOfUnAssignedProjects
-            loggedInUser={loggedInUser}
-            projectData={projectData}
-            setProjectData={setProjectData}
-            handleSubmit={handleSubmit}
-            selectedProjectType={selectedProjectType}
-            setSelectedProjectType={setSelectedProjectType}
+        <div className="col-sm-4">
+          <ListOfUnassignedProjects
+            unassignedProjectAssignments={unassignedProjectAssignments} //need to generate unassignedProjectAssignments and pass as a prop
+            setUnassignedProjectAssignments={setUnassignedProjectAssignments} //need to set the state of unassignedProjectAssignments and pass as a prop
+            loggedInUser={loggedInUser} //KEEP THE USER PASSED AS A PROP
+
+            //!not sure if i will need these below yet
+            // projectData={projectData}
+            // setProjectData={setProjectData}
+            // handleSubmit={handleSubmit}
+            // selectedProjectType={selectedProjectType}
+            // setSelectedProjectType={setSelectedProjectType}
           />
-        </div> */}
+        </div>
       </div>
     </div>
   );
