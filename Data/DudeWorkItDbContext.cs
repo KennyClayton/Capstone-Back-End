@@ -224,11 +224,11 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
             new Project
             {
                 Id = 1,
-                UserProfileId = 3, //! Garrett is a customer creating this project, but I also need to associate this project with a worker when the worker chooses to work this project
+                UserProfileId = 3, //$ This is the customer's UserProfileId value. Garrett is a customer creating this project, but I also need to associate this project with a worker when the worker chooses to work this project
                 ProjectTypeId = 1, // lawn maintenance
-                DateOfProject = new DateTime(2023, 11, 12, 11, 0, 0), //! this should be selected by the customer user when creating a project
-                CompletedOn = new DateTime(2023, 11, 12, 14, 0, 0),
-                Description = "Mulch the flower beds and mow the yard"
+                DateOfProject = new DateTime(2023, 11, 12, 11, 0, 0), //$ this should be selected by the customer user when creating a project
+                CompletedOn = new DateTime(2023, 11, 12, 14, 0, 0), //~ This is completed by the worker
+                Description = "Mulch the flower beds and mow the yard" //$ Customer completes this
                 },
             new Project
             {
@@ -261,7 +261,7 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
             {
                 Id = 5,
                 UserProfileId = 6, // customer Cody Jones
-                ProjectTypeId = 7, // junk removal
+                ProjectTypeId = 7, // gutters
                 DateOfProject = new DateTime(2023, 11, 14, 11, 30, 0), // 11:30am
                 CompletedOn = null,
                 Description = "I think my gutters are clogged, and they ain't gonna clean themselves. Hurry up."
@@ -288,34 +288,36 @@ public class DudeWorkItDbContext : IdentityDbContext<IdentityUser>
             {
                 Id = 1,
                 UserProfileId = 2, // Tyler is the worker that will get this job
-                ProjectId = 1
-
+                ProjectId = 1,
+                ProjectTypeId = 1
             },
             new ProjectAssignment
             {
                 Id = 2,
                 UserProfileId = 7, // Panda is the worker that will get this job
-                ProjectId = 2
-
+                ProjectId = 2,
+                ProjectTypeId = 2
             },
             new ProjectAssignment
             {
                 Id = 3,
                 UserProfileId = null, // no worker set to this job yet
-                ProjectId = 3
-
+                ProjectId = 3,
+                ProjectTypeId = 3
             },
             new ProjectAssignment
             {
                 Id = 4,
                 UserProfileId = null, // no worker set to this job yet
-                ProjectId = 4
+                ProjectId = 4,
+                ProjectTypeId = 8
             },
             new ProjectAssignment
             {
                 Id = 5,
                 UserProfileId = 2, // Tyler is the worker that will get this job
-                ProjectId = 5
+                ProjectId = 5,
+                ProjectTypeId = 7
             }
         });
     }

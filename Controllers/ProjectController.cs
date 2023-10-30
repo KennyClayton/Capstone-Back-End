@@ -19,7 +19,7 @@ public class ProjectController : ControllerBase
         _dbContext = context;
     }
 
-    //^ GET - Get all projects
+    //^1 GET - Get all projects
     [HttpGet] //# this endpoint on the server is "/api/project"
     // [Authorize(Roles = "Customer")] //! authorize only customers
     public IActionResult Get() //# this Get method is an endpoint to get all projects
@@ -33,7 +33,7 @@ public class ProjectController : ControllerBase
         //# The Ok method that gets called inside Get will create an HTTP response with a status of 200, as well as the data that's passed in.
     }
 
-    //^ GET - Get projects by id
+    //^2 GET - Get projects by id
     [HttpGet("{id}")] //# this endpoint on the server is "/api/project/{id}"
     // [Authorize(Roles = "Customer")] //! authorize only customers
     public IActionResult GetById(int id)
@@ -50,24 +50,7 @@ public class ProjectController : ControllerBase
         return Ok(project);
     }
 
-    // [HttpGet("worker-projects/{id}")] //# this endpoint on the server is "/api/project/{id}"
-    // // [Authorize(Roles = "Customer")] //! authorize only customers
-    // public IActionResult GetWorkerProjectsByUserId(int id)
-    // {
-    //     var projects = _dbContext.ProjectAssignments
-    //         .Include(p => p.Projects)
-    //         .Include(p => p.ProjectType)
-    //         .Where(p => p.UserProfile.Id == id)
-    //         .ToList();
-    //     if (projects == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //     return Ok(projects);
-    // }
-
-
-    //^ GET - Get ONLY the projects where the logged-in user's UserProfile.Id matches the project's UserProfileId
+    //^3 GET - Get ONLY the projects where the logged-in user's UserProfile.Id matches the project's UserProfileId
     [HttpGet("user-projects")] //# this endpoint on the server is "/api/project/user-projects"
     // [Authorize(Roles = "Customer")]
     public IActionResult GetUserProjects()
@@ -104,7 +87,7 @@ public class ProjectController : ControllerBase
         return Ok(projectsWithWorkerFullNames);
     }
 
-    //^ POST - This endpoint will map to a POST request with the url /api/project
+    //^4 POST - This endpoint will map to a POST request with the url /api/project
     [HttpPost]
     // [Authorize(Roles = "Customer")]
     public IActionResult CreateProject(Project project)
@@ -115,7 +98,7 @@ public class ProjectController : ControllerBase
         return Created($"/api/project/{project.Id}", project);
     }
 
-    //^ DELETE - This end point will delete a single project by Id
+    //^5 DELETE - This end point will delete a single project by Id
     [HttpDelete("{id}")]
     // [Authorize(Roles = "Customer")]
     public IActionResult DeleteProjectById(int id)
@@ -137,7 +120,7 @@ public class ProjectController : ControllerBase
         return NoContent();
     }
 
-//^ PUT - Update/Edit the details of a project
+//^6 PUT - Update/Edit the details of a project
     [HttpPut("{id}")]
     // [Authorize(Roles = "Customer")]
     public IActionResult UpdateProject(Project project, int id)
@@ -164,14 +147,13 @@ public class ProjectController : ControllerBase
 
 }
 
-//^ NEW FOR PROJECT TYPES
-//& NEW FOR PROJECT TYPES
-//* NEW FOR PROJECT TYPES
-
+//^ ---------- ENDPOINTS for ProjectTypes ---------- //^
+//$ ---------- ENDPOINTS for ProjectTypes ---------- //$
+//~ ---------- ENDPOINTS for ProjectTypes ---------- //~
 
 [ApiController]
 [Route("api/projecttype")]
-//# all of the endpoints in this controller will have URLs that start with "/api/project" (it is case insensitive?)
+//# all of the endpoints in this controller will have URLs that start with "/api/projecttype" (it is case insensitive?)
 public class ProjectTypeController : ControllerBase
 {
     private DudeWorkItDbContext _dbContext;
@@ -180,7 +162,7 @@ public class ProjectTypeController : ControllerBase
     {
         _dbContext = context;
     }
-
+//^7 GET - This endpoint will fetch all project types from the database
     [HttpGet] //# this endpoint on the server is "/api/project"
     // [Authorize(Roles = "Customer")] //! authorize only customers
     public IActionResult Get() //# this Get method is an endpoint to get all projects
@@ -192,8 +174,72 @@ public class ProjectTypeController : ControllerBase
 }
 
 
+//^ ---------- ENDPOINTS for ProjectAssignments ---------- //^
+//$ ---------- ENDPOINTS for ProjectAssignments ---------- //$
+//~ ---------- ENDPOINTS for ProjectAssignments ---------- //~
+
+[ApiController]
+[Route("api/projectassignment")]
+//# all of the endpoints in this controller will have URLs that start with "/api/projectassignment"
+public class ProjectAssignmentController : ControllerBase
+{
+    private DudeWorkItDbContext _dbContext;
+
+    public ProjectAssignmentController(DudeWorkItDbContext context)
+    {
+        _dbContext = context;
+    }
+//^8 GET - This endpoint will fetch a list of all projectAssignments from the database
+//! NO CURRENT NEED FOR THIS ENDPOINT
+    [HttpGet] //# The URL will end with "/api/projectAssignment"
+    public IActionResult GetAllProjectAssignments()
+    {
+        var assignments = _dbContext.ProjectAssignments
+            .Include(pa => pa.UserProfile)
+            .Include(pa => pa.Project)
+                .ThenInclude(p => p.UserProfile)
+            .Include(pa => pa.ProjectType)
+            .ToList();
+        if (assignments == null)
+        {
+            return NotFound();
+        }
+        return Ok(assignments);
+    }
+
+//^9 GET - This endpoint will fetch a list of all projectAssignments by WORKER'S UserProfileId value
+    [HttpGet("worker-projects/{id}")] //# this endpoint on the server is "/api/projectassignment/worker-projects/{id}"
+    public IActionResult GetWorkerProjectAssignments(int id)
+    {
+        var workerAssignments = _dbContext.ProjectAssignments
+            .Include(pa => pa.UserProfile)
+            .Include(pa => pa.Project)
+                .ThenInclude(p => p.UserProfile)
+            .Include(pa => pa.ProjectType)
+            .Where(pa => pa.UserProfile.Id == id)
+            .ToList();
+        if (workerAssignments == null)
+        {
+            return NotFound();
+        }
+        return Ok(workerAssignments);
+    }
 
 
+//^10 GET - This endpoint will fetch a list of all projectAssignments with no UserProfile value (unassigned)
+    [HttpGet("unassigned-worker-projects")] //# this endpoint on the server is "/api/projectassignment/unassigned-worker-projects"
+    public IActionResult getAllUnassignedProjectAssignments()
+    {
+        var unassignedProjectAssignments = _dbContext.ProjectAssignments
+            .Include(pa => pa.UserProfile)
+            .Include(pa => pa.Project)
+                .ThenInclude(p => p.UserProfile)
+            .Include(pa => pa.ProjectType)
+            .Where(pa => pa.UserProfile == null)
+            .ToList();
+        return Ok(unassignedProjectAssignments);
+    }
+}
 
 
 

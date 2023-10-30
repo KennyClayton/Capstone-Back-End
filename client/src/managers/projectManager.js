@@ -1,30 +1,23 @@
 const apiUrl = "/api/project";
+const apiUrlAssignments = "/api/projectAssignment";
 const apiUrlTypes = "/api/projecttype";
 
+//^1 GET - Get all projects
 export const getProjects = () => {
   return fetch(apiUrl).then((res) => res.json());
 };
 
+//^2 GET - Get projects by id
 export const getProjectById = (id) => {
   return fetch(`${apiUrl}/${id}`).then((res) => res.json());
 };
 
-//^GET - Define a function that will fetch all project types from the database
-export const getProjectTypes = () => {
-  return fetch(apiUrlTypes).then((res) => res.json());
-};
-
-//^ GET - at the "/user-projects" endoint, the server should give us a list of projects related to the signed-in user's id
+//^3 GET - Define a function that will fetch a list of projects related to the logged-in user's Id
 export const getUserProjects = () => {
   return fetch(`${apiUrl}/user-projects`).then((res) => res.json());
 };
 
-
-export const getWorkerProjects = (id) => {
-  return fetch(`${apiUrl}/worker-projects/${id}`).then((res) => res.json());
-};
-
-//^ POST - Create a new project
+//^4 POST - Create a new project
 export const createProject = (project) => {
   return fetch(apiUrl, {
     method: "POST",
@@ -35,14 +28,14 @@ export const createProject = (project) => {
   }).then((res) => res.json);
 };
 
-//^ DELETE - Function to delete a project by Id
+//^5 DELETE - Function to delete a project by Id
 export const deleteProjectById = (id) => {
   return fetch(`${apiUrl}/${id}`, {
     method: "DELETE",
   });
 };
 
-//^ UPDATE - Function to update a project
+//^6 PUT - Function to update the details of a project
 export const updateProject = (project) => {
   return fetch(`${apiUrl}/${project.id}`, {
     method: "PUT",
@@ -66,6 +59,48 @@ export const updateProject = (project) => {
     console.error('Error in updateProject:', error);
   });
 }
+
+//^ ---------- FUNCTIONS for ProjectTypes ---------- //^
+//$ ---------- FUNCTIONS for ProjectTypes ---------- //$
+//~ ---------- FUNCTIONS for ProjectTypes ---------- //~
+
+//^7 GET - Define a function that will fetch all project types from the database
+export const getProjectTypes = () => {
+  return fetch(apiUrlTypes).then((res) => res.json());
+};
+
+
+
+//^ ---------- FUNCTIONS for ProjectAssignments ---------- //^
+//$ ---------- FUNCTIONS for ProjectAssignments ---------- //$
+//~ ---------- FUNCTIONS for ProjectAssignments ---------- //~
+
+//^8 GET - Define a function that will fetch a list of all projectAssignments from the database
+export const getProjectAssignments = () => {
+  return fetch(apiUrlAssignments).then((res) => res.json());
+};
+
+
+//^9 GET - Define a function that will fetch a list of projectAssignments where the workers are assigned
+//* Note that we will search by id in the database because we will have the UserProfileId which is unique to workers and customers alike. Looking at the projectassignment table, we compare the passed id and to the UserProfileId coulmn of the ProjectAssignment table in the database
+export const getWorkerProjectAssignments = (id) => {
+  return fetch(`${apiUrlAssignments}/worker-projects/${id}`).then((res) => res.json());
+};
+
+//^10 GET - Define a function that will fetch a list of projectAssignments where there is NO worker assigned
+export const getAllUnassignedProjectAssignments = () => {
+  return fetch(`${apiUrlAssignments}/unassigned-worker-projects`).then((res) => res.json());
+}
+
+
+
+
+
+
+
+
+
+
 
 //This is where front and back end connect.
 
