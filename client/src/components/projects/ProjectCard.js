@@ -17,7 +17,7 @@ export default function ProjectCard({
   const navigate = useNavigate();
 
   return (
-    <Card body color="info" outline style={{ marginBottom: "8px" }}>
+    <Card body color="info" outline style={{ marginBottom: "1rem" }}>
       <CardBody>
         <CardTitle tag="h5">{project.projectType.name}</CardTitle>
         <CardText>

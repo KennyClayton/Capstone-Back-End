@@ -7,6 +7,7 @@ import Projects from "./projects/Projects"; // this is a component that creates 
 import ProjectDetails from "./projects/ProjectDetails";
 import { useEffect, useState } from "react";
 import { getProjects, getProjectById } from "../managers/projectManager";
+import AssignedProjectDetails from "./projects/AssignedProjectDetails";
 
 // there are two props being passed through this function: loggedinuser and setloggedinuser
 //? what is a prop?
@@ -64,6 +65,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               {project ? (
                 <ProjectDetails
                   project={project}
+                  setProjects={setProjects}
                   setProject={setProject}
                   loggedInUser={loggedInUser}
                 />
@@ -73,38 +75,25 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             </AuthorizedRoute>
           }
         />
-        {/* Below: 
-        "The Route group create two routes for workorders. 
-        The route marked index will match to workorders with no extra url segments. 
-        The create route will match /workorders/create." */}
-        {/* <Route path="workorders"> */}
-        {/* <Route
-            index
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <WorkOrderList />
-              </AuthorizedRoute>
-            }
-          /> */}
-        {/* <Route
-            path="create"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CreateWorkOrder />
-              </AuthorizedRoute>
-            }
-          /> */}
-        {/* </Route> */}
-        {/* <Route
-          path="employees"
+        <Route
+          path="assignedProjects/:id"
           element={
-            <AuthorizedRoute roles={["Admin"]} loggedInUser={loggedInUser}>
-              <UserProfileList />
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              {project ? (
+                <AssignedProjectDetails
+                  project={project}
+                  setProject={setProject}
+                  loggedInUser={loggedInUser}
+                />
+              ) : (
+                <p>Loading...</p>
+              )}
             </AuthorizedRoute>
           }
-        /> */}
+        />
       </Route>
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>
   );
 }
+ 

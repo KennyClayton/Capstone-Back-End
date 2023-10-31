@@ -1,4 +1,7 @@
-// This module renders a list of projects assigned to the loggedIn Worker
+
+//^ This module renders  ProjectAssignmentCard inside of AssignedProjectCard.js as a list of projects assigned to the loggedIn Worker
+
+
 import ProjectAssignmentCard from "./AssignedProjectCard";
 
 // Function that maps over projectAssignments list and renders a new card for each projectAssignment
@@ -6,15 +9,18 @@ import ProjectAssignmentCard from "./AssignedProjectCard";
 export default function ListOfAssignedProjects({
   loggedInUser,
   project,
+  setProject,
   projectAssignmentsByUserId,
   setprojectAssignmentsByUserId,
-}) {
+}) { 
+  console.log({loggedInUser})
   return (
     <>
       <h2>{loggedInUser.fullName}'s Projects</h2>
       {projectAssignmentsByUserId.map((projectAssignment) => (
         <ProjectAssignmentCard
           project={project} // passing this all the way from ApplicationViews because I want access to the Customer's UserProfile properties, like fullName
+          setProject={setProject}
           projectAssignment={projectAssignment}
           setprojectAssignmentsByUserId={setprojectAssignmentsByUserId}
           // setDetailsProjectAssignmentId={setDetailsProjectAssignmentId}

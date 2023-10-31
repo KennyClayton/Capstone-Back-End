@@ -109,7 +109,7 @@ export default function ProjectDetails({ project, setProject }) {
         body
         color="info"
         outline
-        style={{ marginBottom: "8px", maxWidth: "600px" }}
+        style={{ marginBottom: "1rem", maxWidth: "600px" }}
         className="m-4"
       >
         <CardBody>
@@ -153,7 +153,7 @@ export default function ProjectDetails({ project, setProject }) {
             onClick={() => handleDeleteClick(id)}
             outline
             color="danger"
-            style={{ marginLeft: "8px" }}
+            style={{ marginLeft: "1rem" }}
           >
             Delete Project
           </Button>
@@ -161,7 +161,7 @@ export default function ProjectDetails({ project, setProject }) {
             onClick={handleMyProjectsButton}
             outline
             color="secondary"
-            style={{ marginLeft: "8px" }}
+            style={{ marginLeft: "1rem" }}
           >
             My Projects
           </Button>
@@ -178,7 +178,7 @@ export default function ProjectDetails({ project, setProject }) {
         body
         color="info"
         outline
-        style={{ marginBottom: "8px", maxWidth: "600px" }}
+        style={{ marginBottom: "1rem", maxWidth: "500px" }}
         className="m-4"
       >
         <CardBody>

@@ -144,6 +144,7 @@ export default function Projects({
             // setDetailsProjectId={setDetailsProjectId}
             //KEEP THE USER PASSED AS A PROP
             loggedInUser={loggedInUser}
+            setProject={setProject}
             project={project}
           />
         </div>
