@@ -26,18 +26,22 @@ export default function ProjectAssignmentCard({
   //   setDetailsProjectId,
 }) {
   const navigate = useNavigate();
-  console.log({ projectAssignment });
+  // console.log({ projectAssignment });
+
 
 
   const [selectedWorker, setSelectedWorker] = useState("");
-  const [workerProfiles, setWorkerProfiles] = useState([]); // State to store worker profiles
+  const [workerProfiles, setWorkerProfiles] = useState([]); // State to store worker profiles (Panda and Ty)
 
-  // useEffect(() => {
-  //   // Fetch worker profiles when the component mounts
-  //   getWorkerProfiles()
-  //     .then((data) => setWorkerProfiles(data))
-  //     .catch((error) => console.error("Error fetching worker profiles: ", error));
-  // }, []);
+  useEffect(() => {
+    // Fetch worker profiles when the component mounts
+    getWorkerProfiles()
+      .then((data) => setWorkerProfiles(data))
+      .catch((error) => console.error("Error fetching worker profiles: ", error));
+  }, []);
+
+  console.log({ workerProfiles });
+
 
 
 //^ Handle the user's selection by posting a new projectAssignment object
@@ -116,9 +120,9 @@ const handleWorkerSelection = async (worker) => {
             }}
           >
             <option value="">Select a worker</option>
-            {workerProfiles.map((worker) => (
-              <option key={worker.id} value={worker.id}>
-                {worker.name}
+            {workerProfiles.map((wp) => (
+              <option key={wp.id} value={wp.id}>
+                {wp.fullName}
               </option>
             ))}
           </Input>
