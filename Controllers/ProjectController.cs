@@ -13,10 +13,10 @@ namespace DudeWorkIt.Controllers;
 public class ProjectController : ControllerBase
 {
     private DudeWorkItDbContext _dbContext;
-
     public ProjectController(DudeWorkItDbContext context)
     {
         _dbContext = context;
+        Console.WriteLine("testing");
     }
 
     //^1 GET - Get all projects
@@ -92,8 +92,15 @@ public class ProjectController : ControllerBase
     // [Authorize(Roles = "Customer")]
     public IActionResult CreateProject(Project project)
     {
-        // project.DateInitiated = DateTime.Now; // I am not using this property on my Project entity
         _dbContext.Projects.Add(project);
+        _dbContext.SaveChanges();
+        var newProjectId = project.Id;
+        ProjectAssignment newProjectAssignment = new ProjectAssignment() {
+            ProjectId = newProjectId,
+            ProjectTypeId = project.ProjectTypeId,
+            UserProfileId = null
+        };
+        _dbContext.ProjectAssignments.Add(newProjectAssignment);
         _dbContext.SaveChanges();
         return Created($"/api/project/{project.Id}", project);
     }
@@ -120,7 +127,7 @@ public class ProjectController : ControllerBase
         return NoContent();
     }
 
-//^6 PUT - Update/Edit the details of a project
+    //^6 PUT - Update/Edit the details of a project
     [HttpPut("{id}")]
     // [Authorize(Roles = "Customer")]
     public IActionResult UpdateProject(Project project, int id)
@@ -137,7 +144,7 @@ public class ProjectController : ControllerBase
         {
             return BadRequest();
         }
-        projectToUpdate.ProjectType = project.ProjectType; 
+        projectToUpdate.ProjectType = project.ProjectType;
         projectToUpdate.DateOfProject = project.DateOfProject;
         projectToUpdate.Description = project.Description; // the new description value will go into the project.Description value
 
@@ -162,7 +169,7 @@ public class ProjectTypeController : ControllerBase
     {
         _dbContext = context;
     }
-//^7 GET - This endpoint will fetch all project types from the database
+    //^7 GET - This endpoint will fetch all project types from the database
     [HttpGet] //# this endpoint on the server is "/api/project"
     // [Authorize(Roles = "Customer")] //! authorize only customers
     public IActionResult Get() //# this Get method is an endpoint to get all projects
@@ -189,8 +196,8 @@ public class ProjectAssignmentController : ControllerBase
     {
         _dbContext = context;
     }
-//^8 GET - This endpoint will fetch a list of all projectAssignments from the database
-//! NO CURRENT NEED FOR THIS ENDPOINT
+    //^8 GET - This endpoint will fetch a list of all projectAssignments from the database
+    //! NO CURRENT NEED FOR THIS ENDPOINT
     [HttpGet] //# The URL will end with "/api/projectAssignment"
     public IActionResult GetAllProjectAssignments()
     {
@@ -207,7 +214,7 @@ public class ProjectAssignmentController : ControllerBase
         return Ok(assignments);
     }
 
-//^9 GET - This endpoint will fetch a list of all projectAssignments by WORKER'S UserProfileId value
+    //^9 GET - This endpoint will fetch a list of all projectAssignments by WORKER'S UserProfileId value
     [HttpGet("worker-projects/{id}")] //# this endpoint on the server is "/api/projectassignment/worker-projects/{id}"
     public IActionResult GetWorkerProjectAssignments(int id)
     {
@@ -226,7 +233,7 @@ public class ProjectAssignmentController : ControllerBase
     }
 
 
-//^10 GET - This endpoint will fetch a list of all projectAssignments with no UserProfile value (unassigned)
+    //^10 GET - This endpoint will fetch a list of all projectAssignments with no UserProfile value (unassigned)
     [HttpGet("unassigned-worker-projects")] //# this endpoint on the server is "/api/projectassignment/unassigned-worker-projects"
     public IActionResult getAllUnassignedProjectAssignments()
     {
@@ -239,7 +246,45 @@ public class ProjectAssignmentController : ControllerBase
             .ToList();
         return Ok(unassignedProjectAssignments);
     }
+
+
+    //^11 - PUT - This endpoint will update a ProjectAssignment's UserProfile property
+    [HttpPut("{id}")]
+    // [Authorize(Roles = "Customer")]
+    public IActionResult UpdateProjectAssignment(ProjectAssignment projectAssignment, int id)
+    {
+        // find the project by Id and store it in a variable
+        ProjectAssignment projectAssignmentToUpdate = _dbContext.ProjectAssignments
+        .Include(pa => pa.UserProfile)
+        .SingleOrDefault(pa => pa.Id == id);
+        if (projectAssignmentToUpdate == null)
+        {
+            return NotFound();
+        }
+        else if (id != projectAssignment.Id)
+        {
+            return BadRequest();
+        }
+        projectAssignmentToUpdate.UserProfile = projectAssignment.UserProfile;
+        // the new description value will go into the project.Description value
+
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
+    //^12 POST - This endpoint will map to a POST request with the url /api/projectAssignment
+    [HttpPost]
+    // [Authorize(Roles = "Customer")]
+    public IActionResult CreateProjectAssignment(ProjectAssignment projectAssignment)
+    {
+        _dbContext.ProjectAssignments.Add(projectAssignment);
+        _dbContext.SaveChanges();
+        return Created($"/api/projectAssignment/{projectAssignment.Id}", projectAssignment);
+    }
+
+
 }
+
 
 
 

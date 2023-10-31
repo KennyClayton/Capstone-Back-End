@@ -12,7 +12,7 @@ import { getProjects, getProjectById } from "../managers/projectManager";
 //? what is a prop?
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   const [projects, setProjects] = useState([]); // When the page loads, the "projects" variable gets filled with a list of all projects. How? Because the useEffect below says to run the getAllProjects function. We ARE NOT displaying these projects yet. We are just getting them at the outset here and STORING them in the "projects" variable. How did "projects" variable get filled up? with the getAllProjects function below.
-  const [project, setProject] = useState(null); // unlike above, this one is used for holding a single project in the project variable (see it used on line 26 or so when setProject is called, which sets the state of project with a single project)
+  const [project, setProject] = useState(null); // unlike above, this one is used for holding a single project (the one we found by Id) in the project variable (see it used on line 26 or so when setProject is called, which sets the state of project with a single project)
   const { id } = useParams(); // Get the project ID from the URL
 
   const getAllProjects = () => {
@@ -41,6 +41,8 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={ 
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <Projects
+              projects={projects}
+              setProjects={setProjects}
               project={project}
               setProject={setProject} 
               loggedInUser={loggedInUser} />

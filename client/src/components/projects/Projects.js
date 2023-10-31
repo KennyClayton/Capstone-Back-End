@@ -3,16 +3,23 @@ import ProjectList from "./ProjectsList";
 import CreateProject from "./CreateProject"; // this is a component that creates a list of projects
 import {
   createProject,
+  createProjectAssignment, //function to POST a new projectAssignment
   getUserProjects,
   getWorkerProjectAssignments,
-  getProjectAssignments,
-  getAllUnassignedProjectAssignments,
+  getProjectAssignments, // this gets the whole list of projectAssignment objects from the database
+  getAllUnassignedProjectAssignments, // this ONLY gets projectAssignments where no UserProfile is assigned (is null)
 } from "../../managers/projectManager";
 import { set } from "date-fns";
 import ListOfAssignedProjects from "./AssignedProjectsList";
 import ListOfUnassignedProjects from "./UnassignedProjectsList";
 
-export default function Projects({ loggedInUser, setProject, project }) {
+export default function Projects({
+  loggedInUser,
+  project,
+  setProject,
+  projects,
+  setProjects,
+}) {
   // this function renders two child components, ProjectList and ProjectDetails. We pass the loggedInUser as an object
   const [detailsProjectId, setDetailsProjectId] = useState(null);
   const [projectsByUserId, setProjectsByUserId] = useState([]); // IMPORTANT - This will be a list of Customer projects. This projectsByUserId variable gets filled up with a list of projects (which only have Customer UserProfiles). How? when the useEffect runs, it will call the getAllProjectsByUserId function. That function is defined above the useEffect. Look at that getAllProjectsByUserId function and you will see that it calls ANOTHER function "getUserProjects" that we defined and imported from projectManager.js.
@@ -21,6 +28,7 @@ export default function Projects({ loggedInUser, setProject, project }) {
   const [selectedProjectType, setSelectedProjectType] = useState("");
   // Here, useState initializes the state of projectData with an object containing these three properties and empty string values
   const [projectData, setProjectData] = useState({
+    //this will allow us to use "projectData" variable to store the new data for a project when we are creating one.
     projectType: "",
     dateOfProject: "",
     description: "",
@@ -38,60 +46,40 @@ export default function Projects({ loggedInUser, setProject, project }) {
   //~ ---------- ABOVE handles getting and setting ALL ProjectAssignments ---------- //~
 
   //~ ---------- BELOW handles getting and setting ProjectAssignments by Id ---------- //~
-  const [projectAssignmentsByUserId, setprojectAssignmentsByUserId] = useState([]); // manage the state of projectAssignments by Id
+  const [projectAssignmentsByUserId, setprojectAssignmentsByUserId] = useState(
+    []
+  ); // manage the state of projectAssignments by Id
 
   const getProjectAssignmentsByUserId = () => {
-    getWorkerProjectAssignments(loggedInUser.id).then(setprojectAssignmentsByUserId);
+    getWorkerProjectAssignments(loggedInUser.id).then(
+      setprojectAssignmentsByUserId
+    );
   };
 
-  useEffect(() => { // set the state of the list of projectAssignments by Id
+  useEffect(() => {
+    // set the state of the list of projectAssignments by Id
     getProjectAssignmentsByUserId();
   }, [loggedInUser.roles]);
   //~ ---------- ABOVE handles getting and setting ProjectAssignments Id ---------- //~
-  
-
 
   //~ ---------- BELOW handles getting and setting unassigned ProjectAssignments ---------- //~
-  const [unassignedProjectAssignments, setUnassignedProjectAssignments] = useState([]); // manage state of this list of unassigned project assignments
+  const [unassignedProjectAssignments, setUnassignedProjectAssignments] =
+    useState([]); // manage state of this list of unassigned project assignments. initialize the state of unassignedProjectAssignments as an empty array, making it ready to receive a list of projectAssignment objects (that are not yet assigned to workers)
 
   const getUnassignedProjectAssignments = () => {
     getAllUnassignedProjectAssignments().then(setUnassignedProjectAssignments);
   };
   useEffect(() => {
     getUnassignedProjectAssignments();
-  }, []);
-  
+  }, []); //! i could insert a dependency to watch the list of all unassignedProjectAssignments here. But I don't need to if I call the setUnassignedProjectAssignments function once a new projectAssignment is created (which will occur simultaneously when a customer creates a new project). So what do I enter as the new projectAssignment? That will keep the application up to date with the most recent list of unassigned projectAssignments. 
+  //& What about when a user assigns a projectAssignment object to himself? That will update that projectAssignment in the database but what about the unassignedProject list? 
+  // Because to have the most updated list of unassigned projects from the database, we need to check the list of ALL project assignments then, when i create a project and the setUnassignedProjectAssignments function is called, it will update the setUnassignedProjectAssignments variable, so if this useEffect is watching that variable, it will run the getUnassignedProjectAssignments function. NO! Because then it will create an infinite loop of getting and setting the state of unassigned projects
+
   //~ ---------- ABOVE handles getting and setting unassigned ProjectAssignments ---------- //~
-
-
 
   const getAllProjectsByUserId = () => {
     // define this function. When the function runs, what happens?
     getUserProjects().then(setProjectsByUserId); // When it runs, this function will get projects by a user's Id that matches the projects UserProfileId.
-  };
-
-  // the below handleSubmit button is called when the user clicks the submit button
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newProject = {
-      userProfileId: loggedInUser.id,
-      projectTypeId: selectedProjectType, // this updates the state of selectedProjectType variable with the user's selected type
-      dateOfProject: projectData.dateOfProject, // Use the dateOfProject from projectData state
-      description: projectData.description, // Use the description from projectData state
-    };
-    // console.log(newProject);
-    // the below createProject function is defined in projectManager.js and is what makes the actual POST / http request to post the new project to the database. We hand that function the newProject object here and then navigate wherever we want, which is root directory in this case....or maybe nowhere.
-    createProject(newProject).then(() => {
-      setSelectedProjectType(""); // Reset selected project type (dropdown list with nothing selected yet)
-      setProjectData({
-        // Reset project data to its initial state of empty strings
-        projectType: "",
-        dateOfProject: "",
-        description: "",
-        // navigate("/"); //not needed bc i am already on the root directory
-      });
-      getAllProjectsByUserId();
-    });
   };
 
   // We already have "projects" and "userProfiles" as variables above. Recall that we set the initial states of those to empty arrays. We want to now run the useEffect which will call these functions and fill those variables above with all projects and users. This useEffect is called a React "hook". Again, this will update that "projects" variable when the useEffect runs. When is that? When this ProjectsList.js component mounts. Since we just want the useEffect to set state at the initial rendering of this component, we will NOT put any dependency into the empty array at the end of this useEffect.
@@ -99,7 +87,7 @@ export default function Projects({ loggedInUser, setProject, project }) {
     getAllProjectsByUserId();
   }, [loggedInUser.roles]);
 
-  //^--------------- conditionally render what customer sees or what worker sees based on the user's role ---------------//^
+  //^--------------- Conditionally render base on customer or worker role ---------------//^
 
   if (
     Array.isArray(loggedInUser.roles) &&
@@ -122,12 +110,17 @@ export default function Projects({ loggedInUser, setProject, project }) {
           </div>
           <div className="col-sm-4">
             <CreateProject
+              project={project}
+              projects={projects}
+              setProjects={setProjects}
               loggedInUser={loggedInUser}
               projectData={projectData}
+              getAllProjectsByUserId={getAllProjectsByUserId}
               setProjectData={setProjectData}
-              handleSubmit={handleSubmit}
               selectedProjectType={selectedProjectType}
               setSelectedProjectType={setSelectedProjectType}
+              unassignedProjectAssignments={unassignedProjectAssignments} // pass this to CreateProject so we can refer to the current state and then push the newly created projectAssignment to that array/table
+              setUnassignedProjectAssignments={setUnassignedProjectAssignments}
             />
             {/* <ProjectDetails detailsBikeId={detailsProjectId} /> */}
           </div>
@@ -156,16 +149,11 @@ export default function Projects({ loggedInUser, setProject, project }) {
         </div>
         <div className="col-sm-4">
           <ListOfUnassignedProjects
+            getProjectAssignmentsByUserId={getProjectAssignmentsByUserId}
+            getUnassignedProjectAssignments={getUnassignedProjectAssignments}
             unassignedProjectAssignments={unassignedProjectAssignments} //need to generate unassignedProjectAssignments and pass as a prop
             setUnassignedProjectAssignments={setUnassignedProjectAssignments} //need to set the state of unassignedProjectAssignments and pass as a prop
             loggedInUser={loggedInUser} //KEEP THE USER PASSED AS A PROP
-
-            //!not sure if i will need these below yet
-            // projectData={projectData}
-            // setProjectData={setProjectData}
-            // handleSubmit={handleSubmit}
-            // selectedProjectType={selectedProjectType}
-            // setSelectedProjectType={setSelectedProjectType}
           />
         </div>
       </div>

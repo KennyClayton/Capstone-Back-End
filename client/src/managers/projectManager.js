@@ -92,9 +92,42 @@ export const getAllUnassignedProjectAssignments = () => {
   return fetch(`${apiUrlAssignments}/unassigned-worker-projects`).then((res) => res.json());
 }
 
+//^11 PUT - Define a function that will update the UserProfile property on a ProjectAssignment object
+//! Not sure how to setUnassignedProjectAssignments from projectManager 
+// export const updateProjectAssignment = (projectAssignment) => {
+//   return fetch(`${apiUrlAssignments}/${projectAssignment.id}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(projectAssignment), //parse into JSON
+//   }).then((res) => {
+//     //go back here 3 more undos if this doesn't work
+//     if (res.status === 204) {
+//       return console.log("UserProfile updated successfully.");
+//         setUnassignedProjectAssignments(updatedUnassignedProjectAssignment); // Update the state;
+//     }
+//     if (!res.ok) {
+//       // Handle non-OK status codes
+//       throw new Error(`Request failed with status: ${res.status}`);
+//     }
+//     return res.json();
+//   })
+//   .catch((error) => {
+//     console.error('Error in updateProject:', error);
+//   });
+// }
 
-
-
+//^12 POST - Create a new projectAssignment
+export const createProjectAssignment = (projectAssignment) => {
+  return fetch(apiUrlAssignments, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(projectAssignment),
+  }).then((res) => res.json);
+};
 
 
 
