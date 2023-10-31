@@ -6,15 +6,18 @@ import ProjectAssignmentCard from "./AssignedProjectCard";
 export default function ListOfAssignedProjects({
   loggedInUser,
   project,
+  setProject,
   projectAssignmentsByUserId,
   setprojectAssignmentsByUserId,
-}) {
+}) { 
+  // console.log({projectAssignmentsByUserId})
   return (
     <>
       <h2>{loggedInUser.fullName}'s Projects</h2>
       {projectAssignmentsByUserId.map((projectAssignment) => (
         <ProjectAssignmentCard
           project={project} // passing this all the way from ApplicationViews because I want access to the Customer's UserProfile properties, like fullName
+          setProject={setProject}
           projectAssignment={projectAssignment}
           setprojectAssignmentsByUserId={setprojectAssignmentsByUserId}
           // setDetailsProjectAssignmentId={setDetailsProjectAssignmentId}

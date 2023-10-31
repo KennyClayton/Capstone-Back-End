@@ -42,7 +42,7 @@ export default function UnassignedProjectCard({
   };
 
   return (
-    <Card body color="info" outline style={{ marginBottom: "8px" }}>
+    <Card body color="info" style={{ marginBottom: "1rem", maxWidth: "400px" }}>
       <CardBody>
         <CardTitle tag="h5">
           {unassignedProjectAssignment.projectType.name}
@@ -56,18 +56,19 @@ export default function UnassignedProjectCard({
           <br></br>
           Customer: {unassignedProjectAssignment.project.userProfile.fullName}
         </CardText>
-        {/* 
-        <Button
+        
+        {/* <Button
         outline
-          color="black"
           style={{
-            borderColor: "black", // Adjust the border color for a thicker outline
+            color: "white",
+            marginRight: "1rem",
+            borderColor: "white", // Adjust the border color for a thicker outline
             fontWeight: "bold", // Set text to bold
           }}
           onClick={() => {
-            setprojectAssignmentsByUserId(projectAssignment);
+            // setprojectAssignmentsByUserId(projectAssignment);
             // setDetailsProjectId(project.id);
-            navigate(`projectassignments/${projectAssignment.id}`);
+            // navigate(`projectassignments/${projectAssignment.id}`);
             window.scrollTo({
               top: 0,
               left: 0,
@@ -80,9 +81,9 @@ export default function UnassignedProjectCard({
 
         <Button
           outline
-          color="black"
           style={{
-            borderColor: "black", // Adjust the border color for a thicker outline
+            color: "white",
+            borderColor: "white", // Adjust the border color for a thicker outline
             fontWeight: "bold", // Set text to bold
           }}
           onClick={() => {

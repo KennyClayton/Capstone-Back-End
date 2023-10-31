@@ -94,7 +94,7 @@ export default function CreateProject({
   return (
     <div>
       <h2>Create A Project</h2>
-      <Card body color="info" outline style={{ marginBottom: "8px" }}>
+      <Card body color="info" outline style={{ marginBottom: "1rem" }}>
         <CardBody>
           {/* <CardTitle tag="h5">Create a New Project</CardTitle> */}
           <Form onSubmit={handleSubmit}>
