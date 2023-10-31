@@ -28,15 +28,14 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
         return Ok(_dbContext.UserProfiles.ToList());
     }
 
-    [HttpGet("withworkerroles")]
+    [HttpGet("withworkerroles")] // Return a list of userprofiles
     // [Authorize(Roles = "Worker")]
     public IActionResult GetWorkerRoles() // this is a method signature that returns an IActionResult
     {
         // "The query [below] gets user profiles, then searches for user roles associated with the profile, and maps each of those to role names."
-        var workerUserProfiles = _dbContext.UserProfiles  //* Return a list of userprofiles
-        .Include(up => up.IdentityUser) // load related data from the "IdentityUser" table when retrieving user profiles
-        .Where(up => up.Roles.Contains("Worker"))
-        .Select(up => new UserProfile //* IMPORTANT - What does this line do? "For each user profile (up), it creates a new UserProfile object with specific properties."
+        var workerUserProfiles = _dbContext.UserProfiles  
+        // .Include(up => up.IdentityUser) // load related data from the "IdentityUser" table when retrieving user profiles
+        .Select(up => new UserProfile
         {
             Id = up.Id,
             FirstName = up.FirstName,
@@ -45,12 +44,12 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
             Email = up.Email,
             UserName = up.UserName,
             IdentityUserId = up.IdentityUserId,
-            ProjectAssignments = up.ProjectAssignments,
-            // Roles = _dbContext.UserRoles
-            // .Where(ur => ur.UserId == up.IdentityUserId)
-            // .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
-            // .ToList()
+            Roles = _dbContext.UserRoles
+            .Where(ur => ur.UserId == up.IdentityUserId)
+            .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
+            .ToList()
         })
+        .Where(up => up.Roles.Contains("Worker"))
         .ToList();
         return Ok(workerUserProfiles);
     }

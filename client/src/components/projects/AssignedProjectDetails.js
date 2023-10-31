@@ -19,8 +19,6 @@ export default function AssignedProjectDetails({ project, setProject, projectAss
   const handleMyProjectsButton = () => {
     navigate("/");
   };
-  console.log({project});
-  console.log(project.dateOfProject);
 
 return (
 
