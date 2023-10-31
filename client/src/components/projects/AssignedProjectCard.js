@@ -16,6 +16,7 @@ export default function ProjectAssignmentCard({
 }) {
   const navigate = useNavigate();
 console.log({projectAssignment})
+
   return (
     <Card body color="info" outline style={{ marginBottom: "8px" }}>
       <CardBody>
