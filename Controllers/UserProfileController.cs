@@ -28,14 +28,14 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
         return Ok(_dbContext.UserProfiles.ToList());
     }
 
-//! I don't know how to authorize in Postman. I want to make sure only worker UserProfiles are returned, but right now ALL user profiles are being returned
     [HttpGet("withworkerroles")]
     // [Authorize(Roles = "Worker")]
     public IActionResult GetWorkerRoles() // this is a method signature that returns an IActionResult
     {
         // "The query [below] gets user profiles, then searches for user roles associated with the profile, and maps each of those to role names."
-        return Ok(_dbContext.UserProfiles  //* Return a list of userprofiles
-        .Include(up => up.IdentityUser) // "This part of the query indicates that you want to load related data from the "IdentityUser" table when retrieving user profiles"
+        var workerUserProfiles = _dbContext.UserProfiles  //* Return a list of userprofiles
+        .Include(up => up.IdentityUser) // load related data from the "IdentityUser" table when retrieving user profiles
+        .Where(up => up.Roles.Contains("Worker"))
         .Select(up => new UserProfile //* IMPORTANT - What does this line do? "For each user profile (up), it creates a new UserProfile object with specific properties."
         {
             Id = up.Id,
@@ -50,7 +50,9 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
             // .Where(ur => ur.UserId == up.IdentityUserId)
             // .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
             // .ToList()
-        }));
+        })
+        .ToList();
+        return Ok(workerUserProfiles);
     }
 
     [HttpGet("withcustomerroles")]

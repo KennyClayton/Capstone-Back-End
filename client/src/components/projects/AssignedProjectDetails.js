@@ -1,31 +1,26 @@
-import React, { useEffect, useState } from "react";
 import {
   Card,
   CardTitle,
   CardSubtitle,
   CardBody,
-  CardText,
   Button,
 } from "reactstrap";
-import { getProjectTypes } from "../../managers/projectManager";
 import { useParams, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 
-export default function AssignedProjectDetails({ project, setProject }) {
+//^ This should be the assignedProject card showing details about the worker's already-assigned project
+
+export default function AssignedProjectDetails({ project, setProject, projectAssignment }) 
+
+{
   // use the project and setProject as props from ApplicationViews so any changes there and here don't conflict.
   const { id } = useParams();
   const navigate = useNavigate();
-
-
-//   useEffect(() => {
-//     // we have access to all the project types objects in the "projectTypes" variable
-//     getProjectTypes().then((data) => setProjectTypes(data));
-//   }, []);
-
   const handleMyProjectsButton = () => {
     navigate("/");
   };
-
+  console.log({project});
+  console.log(project.dateOfProject);
 
 return (
 
@@ -47,22 +42,22 @@ return (
           </CardTitle>
           <CardSubtitle>
             Worker:{" "}
-            {project.workerFullName ? project.workerFullName : "Unassigned"}
+            {project.userProfile.fullName ? project.userProfile.fullName : "Unassigned"}
           </CardSubtitle>
           <CardSubtitle>
             Project Date:{" "}
-            {format(new Date(project.dateOfProject), "MMMM d, yyyy p")}
+            {format(new Date(project.project.dateOfProject), "MMMM d, yyyy p")}
           </CardSubtitle>
           <CardSubtitle>
             Date Completed:{" "}
-            {project.completedOn ? (
-              project.completedOn
+            {project.project.completedOn ? (
+              project.project.completedOn
             ) : (
               <span className="text-muted">Not yet completed</span>
             )}
           </CardSubtitle>
           <CardSubtitle>
-            Project Description: {project.description}
+            Project Description: {project.project.description}
           </CardSubtitle>
         </CardBody>
         <div className="justify-content-between">

@@ -1,25 +1,78 @@
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Card,
+  Card, 
   CardBody,
   CardTitle,
   CardText,
   CardSubtitle,
   Button,
   NavItem,
+  FormGroup,
+  Label,
+  Input,
 } from "reactstrap";
+import { getWorkerProfiles } from "../../managers/userProfileManager";
+
+//^ This module renders AssignedProjectDetails (inside of AssignedProjectDetails.js) when "Show Details" button is clicked which navigates to assignedProjects/${projectAssignment.id}
+
 
 export default function ProjectAssignmentCard({
   project,
+  setProject,
   projectAssignment,
+  setDetailsProjectId,
   setprojectAssignmentsByUserId,
   //   setDetailsProjectId,
 }) {
   const navigate = useNavigate();
-  // console.log({ projectAssignment });
+  console.log({ projectAssignment });
+
+
+  const [selectedWorker, setSelectedWorker] = useState("");
+  const [workerProfiles, setWorkerProfiles] = useState([]); // State to store worker profiles
+
+  // useEffect(() => {
+  //   // Fetch worker profiles when the component mounts
+  //   getWorkerProfiles()
+  //     .then((data) => setWorkerProfiles(data))
+  //     .catch((error) => console.error("Error fetching worker profiles: ", error));
+  // }, []);
+
+
+//^ Handle the user's selection by posting a new projectAssignment object
+const handleWorkerSelection = async (worker) => {
+  try {
+    // Perform a POST request to create a new projectAssignment
+    const newProjectAssignment = {
+      userProfileId: worker, // Set the selected worker's UserProfileId
+      projectId: projectAssignment.project.Id, // Set the current project's Id
+    };
+
+    const response = await fetch("/api/projectAssignments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newProjectAssignment),
+    });
+
+    if (response.ok) {
+      console.log("New projectAssignment created successfully.");
+    } else {
+      console.error("Failed to create a new projectAssignment.");
+    }
+  } catch (error) {
+    console.error("An error occurred while creating a new projectAssignment.", error);
+  }
+};
+
+
+
+
 
   return (
-    <Card body color="info" outline style={{ marginBottom: "1rem", maxWidth: "400px" }}>
+    <Card body color="info" outline style={{ marginBottom: "8px" }}>
       <CardBody>
         <CardTitle tag="h5">{projectAssignment.projectType.name}</CardTitle>
         <CardText>
@@ -34,12 +87,11 @@ export default function ProjectAssignmentCard({
           outline
           color="black"
           style={{
-            borderColor: "black",
-            fontWeight: "bold", 
+            borderColor: "black", // Adjust the border color for a thicker outline
+            fontWeight: "bold", // Set text to bold
           }}
           onClick={() => {
-            setprojectAssignmentsByUserId(projectAssignment);
-            // setDetailsProjectId(project.id);
+            setProject(projectAssignment);
             navigate(`assignedProjects/${projectAssignment.id}`);
             window.scrollTo({
               top: 0,
@@ -50,6 +102,29 @@ export default function ProjectAssignmentCard({
         >
           Show Details
         </Button>
+
+        <FormGroup>
+          <Label for="worker">Add Worker</Label>
+          <Input
+            type="select"
+            name="worker"
+            id="worker"
+            value={selectedWorker}
+            onChange={(e) => {
+              setSelectedWorker(e.target.value);
+              handleWorkerSelection(e.target.value);
+            }}
+          >
+            <option value="">Select a worker</option>
+            {workerProfiles.map((worker) => (
+              <option key={worker.id} value={worker.id}>
+                {worker.name}
+              </option>
+            ))}
+          </Input>
+        </FormGroup>
+
+
       </CardBody>
     </Card>
   );

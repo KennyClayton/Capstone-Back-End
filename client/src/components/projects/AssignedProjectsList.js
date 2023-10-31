@@ -1,4 +1,7 @@
-// This module renders a list of projects assigned to the loggedIn Worker
+
+//^ This module renders  ProjectAssignmentCard inside of AssignedProjectCard.js as a list of projects assigned to the loggedIn Worker
+
+
 import ProjectAssignmentCard from "./AssignedProjectCard";
 
 // Function that maps over projectAssignments list and renders a new card for each projectAssignment
@@ -27,3 +30,4 @@ export default function ListOfAssignedProjects({
     </>
   );
 }
+ 

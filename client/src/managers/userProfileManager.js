@@ -24,3 +24,9 @@ export const createUser =  (user) => {
 export const getUserProfiles = () => {
     return fetch(apiUrl).then((res) => res.json());
   };
+
+
+  //^ This will hit the endpoint to get worker profiles
+export const getWorkerProfiles = () => {
+    return fetch(`${apiUrl}/withworkerroles`).then((res) => res.json());
+}
