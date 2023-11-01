@@ -13,7 +13,7 @@ export default function ListOfAssignedProjects({
   projectAssignmentsByUserId,
   setprojectAssignmentsByUserId,
 }) { 
-  console.log({loggedInUser})
+  // console.log({loggedInUser})
   return (
     <>
       <h2>{loggedInUser.fullName}'s Projects</h2>
