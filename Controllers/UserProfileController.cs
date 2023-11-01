@@ -59,8 +59,7 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
     public IActionResult GetCustomerRoles()
     {
         // "The query [below] gets user profiles, then searches for user roles associated with the profile, and maps each of those to role names."
-        return Ok(_dbContext.UserProfiles
-        .Include(up => up.IdentityUser)
+        var customerUserProfiles = _dbContext.UserProfiles
         .Select(up => new UserProfile
         {
             Id = up.Id,
@@ -75,7 +74,9 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
             .ToList()
         })
-        );
+        .Where(up => up.Roles.Contains("Customer"))
+        .ToList();
+        return Ok(customerUserProfiles);
     }
 
     // //^GET /api/userprofile/{id}

@@ -17,7 +17,7 @@ import { getWorkerProfiles } from "../../managers/userProfileManager";
 //^ This module renders AssignedProjectDetails (inside of AssignedProjectDetails.js) when "Show Details" button is clicked which navigates to assignedProjects/${projectAssignment.id}
 
 export default function ProjectAssignmentCard({
-  project,
+  project, 
   setProject,
   projectAssignment,
   setDetailsProjectId,
