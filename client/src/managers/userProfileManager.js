@@ -26,7 +26,12 @@ export const getUserProfiles = () => {
   };
 
 
-  //^ This will hit the endpoint to get worker profiles
+  //^ This will hit the endpoint to get worker user profiles
 export const getWorkerProfiles = () => {
     return fetch(`${apiUrl}/withworkerroles`).then((res) => res.json());
+}
+
+  //^ This will hit the endpoint to get customer user profiles
+  export const getCustomerProfiles = () => {
+    return fetch(`${apiUrl}/withcustomerroles`).then((res) => res.json());
 }
