@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../managers/authManager";
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import "./Login.css"
+import DudeWorkItLogo from "../DudeWorkIt.png"
 
 export default function Login({ setLoggedInUser }) {
   const navigate = useNavigate();
@@ -23,7 +25,11 @@ export default function Login({ setLoggedInUser }) {
 
   return (
     <div className="container" style={{ maxWidth: "500px" }}>
+      {/* <img className= "sizeDownLogo" src={DudeWorkItLogo} alt="Logo" /> */}
+      <br></br>
+      <br></br>
       <h3>Login</h3>
+      <br></br>
       <FormGroup>
         <Label>Email</Label>
         <Input
@@ -50,7 +56,7 @@ export default function Login({ setLoggedInUser }) {
         <FormFeedback>Login failed.</FormFeedback>
       </FormGroup>
 
-      <Button color="primary" onClick={handleSubmit}>
+      <Button color="info" onClick={handleSubmit}>
         Login
       </Button>
       <p>

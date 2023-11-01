@@ -1,0 +1,12 @@
+
+.sizeDownLogo {
+    width: 12rem;
+    height: auto;
+    padding-top: .5rem;
+    padding-left: .3rem;
+    margin-left: 1rem;
+}
+
+.case:hover {
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.1) inset;
+}
