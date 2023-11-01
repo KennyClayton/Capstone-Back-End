@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Card, 
+  Card,
   CardBody,
   CardTitle,
   CardText,
@@ -16,7 +16,6 @@ import { getWorkerProfiles } from "../../managers/userProfileManager";
 
 //^ This module renders AssignedProjectDetails (inside of AssignedProjectDetails.js) when "Show Details" button is clicked which navigates to assignedProjects/${projectAssignment.id}
 
-
 export default function ProjectAssignmentCard({
   project,
   setProject,
@@ -28,52 +27,52 @@ export default function ProjectAssignmentCard({
   const navigate = useNavigate();
   // console.log({ projectAssignment });
 
-
-
-  const [selectedWorker, setSelectedWorker] = useState("");
+  const [selectedWorker, setSelectedWorker] = useState(""); // when user clicks a worker name from dropdown, the setSelectedWorker function runs and the value of selectedWorker gets set to the selected user's workerprofile Id
   const [workerProfiles, setWorkerProfiles] = useState([]); // State to store worker profiles (Panda and Ty)
+
+  console.log(selectedWorker);
 
   useEffect(() => {
     // Fetch worker profiles when the component mounts
     getWorkerProfiles()
       .then((data) => setWorkerProfiles(data))
-      .catch((error) => console.error("Error fetching worker profiles: ", error));
+      .catch((error) =>
+        console.error("Error fetching worker profiles: ", error)
+      );
   }, []);
 
-  console.log({ workerProfiles });
+  // console.log({ workerProfiles });
 
+  //^ Handle the user's selection by posting a new projectAssignment object
+  const handleWorkerSelection = async (worker) => {
+    try {
+      // Perform a POST request to create a new projectAssignment
+      const newProjectAssignment = {
+        userProfileId: worker.id, // Set the selected worker's UserProfileId
+        projectId: projectAssignment.projectId, // Set the current project's Id
+        projectTypeId: projectAssignment.projectTypeId
+      };
+console.log({projectAssignment})
+      const response = await fetch("/api/projectAssignment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProjectAssignment),
+      });
 
-
-//^ Handle the user's selection by posting a new projectAssignment object
-const handleWorkerSelection = async (worker) => {
-  try {
-    // Perform a POST request to create a new projectAssignment
-    const newProjectAssignment = {
-      userProfileId: worker, // Set the selected worker's UserProfileId
-      projectId: projectAssignment.project.Id, // Set the current project's Id
-    };
-
-    const response = await fetch("/api/projectAssignments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newProjectAssignment),
-    });
-
-    if (response.ok) {
-      console.log("New projectAssignment created successfully.");
-    } else {
-      console.error("Failed to create a new projectAssignment.");
+      if (response.ok) {
+        console.log("New projectAssignment created successfully.");
+      } else {
+        console.error("Failed to create a new projectAssignment.");
+      }
+    } catch (error) {
+      console.error(
+        "An error occurred while creating a new projectAssignment.",
+        error
+      );
     }
-  } catch (error) {
-    console.error("An error occurred while creating a new projectAssignment.", error);
-  }
-};
-
-
-
-
+  };
 
   return (
     <Card body color="info" outline style={{ marginBottom: "8px" }}>
@@ -91,8 +90,8 @@ const handleWorkerSelection = async (worker) => {
           outline
           color="black"
           style={{
-            borderColor: "black", // Adjust the border color for a thicker outline
-            fontWeight: "bold", // Set text to bold
+            borderColor: "black",
+            fontWeight: "bold", 
           }}
           onClick={() => {
             setProject(projectAssignment);
@@ -106,29 +105,35 @@ const handleWorkerSelection = async (worker) => {
         >
           Show Details
         </Button>
-
-        <FormGroup>
-          <Label for="worker">Add Worker</Label>
-          <Input
-            type="select"
-            name="worker"
-            id="worker"
-            value={selectedWorker}
-            onChange={(e) => {
-              setSelectedWorker(e.target.value);
-              handleWorkerSelection(e.target.value);
-            }}
+        <div>
+          <FormGroup>
+            <Label for="worker">Add Worker</Label>
+            <Input
+              type="select"
+              name="worker"
+              id="worker"
+              onChange={(e) => {
+                const selectedWorker = workerProfiles.find(
+                  (wp) => wp.id === parseInt(e.target.value)
+                );
+                setSelectedWorker(selectedWorker);
+              }}
+            >
+              <option value="">Select a worker</option>
+              {workerProfiles.map((wp) => (
+                <option key={wp.id} value={wp.id}>
+                  {wp.fullName}
+                </option>
+              ))}
+            </Input>
+          </FormGroup>
+          <Button
+            color="info"
+            onClick={() => handleWorkerSelection(selectedWorker)}
           >
-            <option value="">Select a worker</option>
-            {workerProfiles.map((wp) => (
-              <option key={wp.id} value={wp.id}>
-                {wp.fullName}
-              </option>
-            ))}
-          </Input>
-        </FormGroup>
-
-
+            Add Worker
+          </Button>
+        </div>
       </CardBody>
     </Card>
   );
