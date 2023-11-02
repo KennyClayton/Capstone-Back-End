@@ -46,16 +46,14 @@ export default function Projects({
   //~ ---------- ABOVE handles getting and setting ALL ProjectAssignments ---------- //~
 
   //~ ---------- BELOW handles getting and setting ProjectAssignments by Id ---------- //~
-  const [projectAssignmentsByUserId, setprojectAssignmentsByUserId] = useState(
-    []
-  ); // manage the state of projectAssignments by Id
+  const [projectAssignmentsByUserId, setprojectAssignmentsByUserId] = useState([]); // manage the state of projectAssignments by Id
 
   const getProjectAssignmentsByUserId = () => {
     getWorkerProjectAssignments(loggedInUser.id).then(
       setprojectAssignmentsByUserId
     );
   };
-
+console.log({projectAssignmentsByUserId})
   useEffect(() => {
     // set the state of the list of projectAssignments by Id
     getProjectAssignmentsByUserId();
@@ -141,9 +139,8 @@ export default function Projects({
             //need to setAssignedProjects and pass as a prop
             setprojectAssignmentsByUserId={setprojectAssignmentsByUserId}
             // //need to setDetailsAssignedProjectId
-            // setDetailsProjectId={setDetailsProjectId}
-            //KEEP THE USER PASSED AS A PROP
-            loggedInUser={loggedInUser}
+            // setDetailsProjectId={setDetailsProjectId}            
+            loggedInUser={loggedInUser} //KEEP THE USER PASSED AS A PROP
             setProject={setProject}
             project={project}
           />

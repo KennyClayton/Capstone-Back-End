@@ -28,7 +28,10 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
           <div className="logo-container">
             <img src={DudeWorkItLogo} alt="Logo" className="sizeDownLogo" />
           </div>
-        </NavbarBrand>
+        {loggedInUser ? (
+          <span style={{ marginLeft: '20px' }}>Welcome, {loggedInUser.fullName}</span>
+          ) : null}
+          </NavbarBrand>
         {loggedInUser ? (
           <>
             {/* <NavbarToggler onClick={toggleNavbar} /> */}
