@@ -1,3 +1,7 @@
+//!!! THIS WAS PERFECTLY RUNNING 8PM ON 11/1/2023 WITH THE POP UP ALERT SHOWING A WORKER WAS ADDED. REVERT BACK TO THIS IF MY EXPERIMENT WITH ONLY DISPLAYING AVAILABLE WORKERS BESIDES THE ONE LOGGED IN RIGHT NOW DOES NOT WORKOUT
+//$ THIS WAS PERFECTLY RUNNING 8PM ON 11/1/2023 WITH THE POP UP ALERT SHOWING A WORKER WAS ADDED. REVERT BACK TO THIS IF MY EXPERIMENT WITH ONLY DISPLAYING AVAILABLE WORKERS BESIDES THE ONE LOGGED IN RIGHT NOW DOES NOT WORKOUT
+//^ THIS WAS PERFECTLY RUNNING 8PM ON 11/1/2023 WITH THE POP UP ALERT SHOWING A WORKER WAS ADDED. REVERT BACK TO THIS IF MY EXPERIMENT WITH ONLY DISPLAYING AVAILABLE WORKERS BESIDES THE ONE LOGGED IN RIGHT NOW DOES NOT WORKOUT
+
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
@@ -19,7 +23,6 @@ import { getWorkerProfiles } from "../../managers/userProfileManager";
 export default function ProjectAssignmentCard({
   project,
   setProject,
-  loggedInUser,
   projectAssignment,
   setDetailsProjectId,
   setprojectAssignmentsByUserId,
@@ -29,30 +32,9 @@ export default function ProjectAssignmentCard({
   // console.log({ projectAssignment });
 
   const [selectedWorker, setSelectedWorker] = useState(""); // when user clicks a worker name from dropdown, the setSelectedWorker function runs and the value of selectedWorker gets set to the selected user's workerprofile Id
-  // console.log(selectedWorker);
   const [workerProfiles, setWorkerProfiles] = useState([]); // State to store worker profiles (Panda and Ty)
-  const [addedWorkers, setAddedWorkers] = useState([]); // Keep track of added workers
 
-  //~ TRYING SOMETHING - ALL NEW CODE HERE - ~//
-  const [availableWorkers, setAvailableWorkers] = useState([]); // State to store available workers
-
-  useEffect(() => {
-    // Fetch all worker profiles excluding the logged-in worker
-    getWorkerProfiles()
-      .then((data) => {
-        // Assuming you have a variable to represent the logged-in worker's id
-        const loggedInUserId = loggedInUser.id;
-        const filteredWorkers = data.filter(
-          (worker) => worker.id !== loggedInUserId
-        );
-        setAvailableWorkers(filteredWorkers);
-      })
-      .catch((error) =>
-        console.error("Error fetching worker profiles: ", error)
-      );
-  }, [loggedInUser]); // Fetch worker profiles when the logged-in user changes
-
-  //~ TRYING SOMETHING - ALL NEW CODE HERE - ~//
+  console.log(selectedWorker);
 
   useEffect(() => {
     // Fetch worker profiles when the component mounts
@@ -74,8 +56,7 @@ export default function ProjectAssignmentCard({
         projectId: projectAssignment.projectId, // Set the current project's Id
         projectTypeId: projectAssignment.projectTypeId,
       };
-      console.log({worker})
-      console.log({ newProjectAssignment });
+      console.log({ projectAssignment });
       const response = await fetch("/api/projectAssignment", {
         method: "POST",
         headers: {
@@ -87,9 +68,6 @@ export default function ProjectAssignmentCard({
       if (response.ok) {
         window.alert(`${worker.firstName} was added to this project.`);
         console.log("New projectAssignment created successfully.");
-        setAvailableWorkers((prevWorkers) => prevWorkers.filter((w) => w.id !== worker.id));
-        setSelectedWorker(""); // Clear the selected worker
-        setAddedWorkers((prevAdded) => [...prevAdded, worker.id]); // Add the worker's ID to the list of added workers
       } else {
         console.error("Failed to create a new projectAssignment.");
       }
@@ -139,7 +117,6 @@ export default function ProjectAssignmentCard({
               type="select"
               name="worker"
               id="worker"
-              // value={selectedWorker} //the code didn'e woth this way, so created it in the next line of code
               onChange={(e) => {
                 const selectedWorker = workerProfiles.find(
                   (wp) => wp.id === parseInt(e.target.value)
@@ -148,14 +125,17 @@ export default function ProjectAssignmentCard({
               }}
             >
               <option value="">Select a worker</option>
-              {availableWorkers.map((worker) => (
-                <option key={worker.id} value={worker.id}>
-                  {worker.fullName}
+              {workerProfiles.map((wp) => (
+                <option key={wp.id} value={wp.id}>
+                  {wp.fullName}
                 </option>
               ))}
             </Input>
           </FormGroup>
-          <Button color="info" onClick={() => handleWorkerSelection(selectedWorker)}>
+          <Button
+            color="info"
+            onClick={() => handleWorkerSelection(selectedWorker)}
+          >
             Add Worker
           </Button>
         </div>

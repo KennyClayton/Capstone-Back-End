@@ -21,7 +21,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 
-export default function ProjectDetails({ project, setProject }) {
+export default function ProjectDetails({ project, setProject, }) {
   // use the project and setProject as props from ApplicationViews so any changes there and here don't conflict.
   const { id } = useParams();
   const navigate = useNavigate();
