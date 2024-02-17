@@ -15,8 +15,14 @@ Customers are able to view a list of their created projects. Customers can also 
 - [Contributing](#contributing)
 - [License](#license)
 
+## Technologies
+.NET
+C#
+
 ## Installation
 Provide step-by-step instructions on how to install and set up your project. Include any prerequisites or dependencies that need to be installed beforehand.
+
+1. Install C# Dev Kit extension for VS Code here: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
 
 1. Clone the repository:
     ```bash
