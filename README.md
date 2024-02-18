@@ -16,26 +16,30 @@ Customers are able to view a list of their created projects. Customers can also 
 - [License](#license)
 
 ## Technologies
-.NET
-C#
+- .NET
+- C#
+- Javascript (React)
+- CSS
+- HTML
 
 ## Installation
 How to install and set up the project. Include any prerequisites or dependencies that need to be installed beforehand.
 
-1. Download and install Node.js from https://nodejs.org/en/download.
-2. Install C# Dev Kit extension for VS Code here: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
-
-1. Clone the repository:
+1. Download and install Node.js from
+2. ```bash
+   https://nodejs.org/en/download.
+   ```
+3. Clone the repository:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-2. Navigate to the project directory:
+4. Navigate to the project directory:
     ```bash
     cd your-project
     ```
 
-3. Install dependencies:
+5. Install dependencies:
     ```bash
     npm install
     ```
