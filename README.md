@@ -1,8 +1,6 @@
 # Full Stack Application for my Capstone Project
 Name of Project: DudeWorkIt
 
-Understand this project, its purpose, and how to use it.
-
 ## Description
 This project is designed to be used by two types of users: workers and customers. 
 Workers are able to view jobs as they are created by customers. Workers can also claim those jobs, meaning the job is now in that worker's queue and no longer available for other workers. Workers can also assign a claimed project to another worker, however. 
