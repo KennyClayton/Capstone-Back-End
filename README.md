@@ -26,20 +26,20 @@ Customers are able to view a list of their created projects. Customers can also 
 How to install and set up the project. Include any prerequisites or dependencies that need to be installed beforehand.
 
 1. Download and install Node.js from
-2. ```bash
+    ```bash
    https://nodejs.org/en/download.
    ```
-3. Clone the repository:
+2. Clone the repository by running this command:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-4. Navigate to the project directory:
+3. Navigate to the project directory DOUBLE CHECK TO SEE HOW IT IS CLONED AND WHERE TO SEE CHANGE DIRECTORY INTO...CAPSTONE-BACK-END???? OR NO?:
     ```bash
-    cd your-project
+    cd Capstone-Back-End/client
     ```
 
-5. Install dependencies:
+4. Install dependencies. This command will download and install all dependencies listed in the package.json file:
     ```bash
     npm install
     ```
@@ -47,10 +47,14 @@ How to install and set up the project. Include any prerequisites or dependencies
 ## Usage
 Explain how to use your application. Provide examples and describe any commands or inputs users need to know.
 
-1. **To start the application:**
+**To start the application:**
    From Bash:
        navigate to the client folder
-       Run _npm start_ which will locate the package.json file and start the server
+       Run this command, which will locate the package.json file and start the server:
+   ```bash
+   _npm start_
+   ```
+   
    From VSCode:
        navigate to the "Run and Debug" button
        click the play button to "Start Debugging"
