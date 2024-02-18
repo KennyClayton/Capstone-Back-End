@@ -6,11 +6,12 @@ This project is designed to be used by two types of users: workers and customers
 
 _Worker users_
 
-> Workers are able to view jobs as they are created by customers.
+> Workers are able to view projects created by customers. //READ
 
-> Workers can also claim those jobs, meaning the job is now in that worker's queue and no longer available for other workers.
+> Workers can claim the projects created by customers, which places that project in the list of projects assigned to that worker. That claimed project is no longer available for other workers. //UPDATE
 
-> Workers can also assign a claimed project to another worker, however. 
+> Workers can assign a claimed project to another worker, however. //CREATE and UPDATE
+    Question: It sounds like we are updating; are you sure this is really creating? Yes. When a worker assigns an existing project to himself, a new object is created and stored in the database as a 
 
 
 _Customer users_
