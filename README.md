@@ -5,11 +5,13 @@ Name of Project: DudeWorkIt
 This project is designed to be used by two types of users: workers and customers.
 
 _Worker users_
+
 Workers are able to view jobs as they are created by customers. 
 Workers can also claim those jobs, meaning the job is now in that worker's queue and no longer available for other workers. 
 Workers can also assign a claimed project to another worker, however. 
 
 _Customer users_
+
 Customers are able to view a list of their created projects. 
 Customers can also delete their own projects. 
 Customers are able to create new projects for workers to see and claim as their own.
