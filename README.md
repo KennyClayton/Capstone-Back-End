@@ -20,13 +20,14 @@ Customers are able to view a list of their created projects. Customers can also 
 C#
 
 ## Installation
-Provide step-by-step instructions on how to install and set up your project. Include any prerequisites or dependencies that need to be installed beforehand.
+How to install and set up the project. Include any prerequisites or dependencies that need to be installed beforehand.
 
-1. Install C# Dev Kit extension for VS Code here: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
+1. Download and install Node.js from https://nodejs.org/en/download.
+2. Install C# Dev Kit extension for VS Code here: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/your-project.git
+    git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
 2. Navigate to the project directory:
@@ -42,21 +43,14 @@ Provide step-by-step instructions on how to install and set up your project. Inc
 ## Usage
 Explain how to use your application. Provide examples and describe any commands or inputs users need to know.
 
-1. Start the application:
-    ```bash
-    npm start
-    ```
-
-2. Open your web browser and go to `http://localhost:3000` to view the application.
-
-## Configuration
-If your project requires any configuration (e.g., environment variables, settings), explain how users can configure it.
-
-- Create a `.env` file in the project root directory.
-- Add the following key-value pairs:
-    ```
-    KEY=VALUE
-    ```
+1. **To start the application:**
+   From Bash:
+       navigate to the client folder
+       Run _npm start_ which will locate the package.json file and start the server
+   From VSCode:
+       navigate to the "Run and Debug" button
+       click the play button to "Start Debugging"
+       The application should open in your default browser at `http://localhost:3000/login`
 
 ## Contributing
 Guidelines for others who may want to contribute to this project. Include information about how they can submit bug reports, suggest improvements, or contribute code.
@@ -69,6 +63,4 @@ Guidelines for others who may want to contribute to this project. Include inform
 6. Create a new Pull Request.
 
 ## License
-Specify the license under which your project is distributed. Include any relevant copyright or license information.
-
-[License Name](link-to-license)
+    No license.
