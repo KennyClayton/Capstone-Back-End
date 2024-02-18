@@ -6,7 +6,7 @@ This project is designed to be used by two types of users: workers and customers
 
 _Worker users_
 
-> Workers are able to view jobs as they are created by customers. 
+> Workers are able to view jobs as they are created by customers. // 
 > Workers can also claim those jobs, meaning the job is now in that worker's queue and no longer available for other workers. 
 > Workers can also assign a claimed project to another worker, however. 
 
