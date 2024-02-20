@@ -43,21 +43,18 @@ _Customer users_
 ## Installation
 How to install and set up the project. Include any prerequisites or dependencies that need to be installed beforehand.
 
-1. Download and install Node.js from
-    ```bash
-   https://nodejs.org/en/download.
-   ```
+1. Download and install Node.js from here: https://nodejs.org/en/download
 2. Clone the repository by running this command:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-3. Navigate to the project directory DOUBLE CHECK TO SEE HOW IT IS CLONED AND WHERE TO SEE CHANGE DIRECTORY INTO...CAPSTONE-BACK-END???? OR NO?:
+4. Navigate to the project directory DOUBLE CHECK TO SEE HOW IT IS CLONED AND WHERE TO SEE CHANGE DIRECTORY INTO...CAPSTONE-BACK-END???? OR NO?:
     ```bash
     cd Capstone-Back-End/client
     ```
 
-4. Install dependencies. This command will download and install all dependencies listed in the package.json file:
+5. Install dependencies. This command will download and install all dependencies listed in the package.json file:
     ```bash
     npm install
     ```
