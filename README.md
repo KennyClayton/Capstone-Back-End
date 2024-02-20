@@ -1,5 +1,4 @@
 # Full Stack Application for my Capstone Project
-Name of Project: DudeWorkIt
 
 ## Table of Contents
 - [Description](#description)
@@ -11,6 +10,8 @@ Name of Project: DudeWorkIt
 - [License](#license)
 
 ## Description
+**Name of Project: DudeWorkIt**
+
 This project is designed to be used by two types of users: customers and workers.
 
 _Customer users_
