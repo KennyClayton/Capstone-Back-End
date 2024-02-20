@@ -11,7 +11,15 @@ Name of Project: DudeWorkIt
 - [License](#license)
 
 ## Description
-This project is designed to be used by two types of users: workers and customers.
+This project is designed to be used by two types of users: customers and workers.
+
+_Customer users_
+
+> Customers are able to create new projects for workers to see and claim as their own. //CREATE
+> Customers are able to view a list of their created projects. //READ
+> Customers can update their projects' type, date and description. //UPDATE
+> Customers can also delete their own projects. //DELETE
+
 
 _Worker users_
 
@@ -26,13 +34,6 @@ _Question: It sounds like we are updating; are you sure this is also really crea
 _Answer: Yes. When a worker assigns an existing project to himself, a new object is created and stored in the database as a new ProjectAssignment object in the ProjectAssignment table._
 
 
-_Customer users_
-
-> Customers are able to view a list of their created projects.
-
-> Customers can also delete their own projects.
-
-> Customers are able to create new projects for workers to see and claim as their own.
 
 
 ## Technologies
