@@ -16,8 +16,11 @@ This project is designed to be used by two types of users: customers and workers
 _Customer users_
 
 > Customers are able to create new projects for workers to see and claim as their own. //CREATE
+> 
 > Customers are able to view a list of their created projects. //READ
+> 
 > Customers can update their projects' type, date and description. //UPDATE
+> 
 > Customers can also delete their own projects. //DELETE
 
 
