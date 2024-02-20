@@ -30,9 +30,9 @@ _Worker users_
 
 > Workers can assign a claimed project to another worker. //CREATE and UPDATE
 
-    _Question: It sounds like we are updating a project entity; how is this creating?_
-    
-    _Answer: When a worker assigns an existing project to himself, a new _ProjectAssignment_ object is created and stored in the database in the ProjectAssignment table._
+_Question: It sounds like we are updating a project entity; how is this creating?_
+
+_Answer: When a worker assigns an existing project to himself, a new _ProjectAssignment_ object is created and stored in the database in the ProjectAssignment table._
 
 > Workers can view a list of projects created by customers (until a project is claimed by a worker). //READ
 
