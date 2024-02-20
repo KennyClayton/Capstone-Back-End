@@ -12,7 +12,8 @@ _Worker users_
 
 > Workers can assign a claimed project to another worker, however. //CREATE and UPDATE
 
-_Question: It sounds like we are updating; are you sure this is really creating? 
+_Question: It sounds like we are updating; are you sure this is really creating?_
+
 _Answer: Yes. When a worker assigns an existing project to himself, a new object is created and stored in the database as a new ProjectAssignment object in the ProjectAssignment table._
 
 
