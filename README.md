@@ -23,6 +23,7 @@ _Customer users_
 > Customers are able to create new projects for workers to see and claim as their own.
 
 ## Table of Contents
+- [Technologies]
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
