@@ -9,6 +9,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 
+
 ## Description
 **Name of Project: DudeWorkIt**
 
@@ -16,26 +17,28 @@ This project is designed to be used by two types of users: customers and workers
 
 _Customer users_
 
-> Customers can create new projects for workers to see and claim as their own. //CREATE
+> Customers can create new projects. //CREATE
 > 
-> Customers can view a list of their created projects. //READ
+> Customers can view a list of their own projects. //READ
 > 
-> Customers can update their projects' type, date and description. //UPDATE
+> Customers can update their own projects' type, date and description fields. //UPDATE
 > 
-> Customers can also delete their own projects. //DELETE
+> Customers can delete their own projects. //DELETE
 
 
 _Worker users_
 
-> Workers are able to view projects created by customers. //READ
+> Workers can assign a claimed project to another worker. //CREATE and UPDATE
 
-> Workers can claim the projects created by customers, which places that project in the list of projects assigned to that worker. That claimed project is no longer available for other workers. //UPDATE
+    _Question: It sounds like we are updating a project entity; how is this creating?_
+    
+    _Answer: When a worker assigns an existing project to himself, a new _ProjectAssignment_ object is created and stored in the database in the ProjectAssignment table._
 
-> Workers can assign a claimed project to another worker, however. //CREATE and UPDATE
+> Workers can view a list of projects created by customers (until a project is claimed by a worker). //READ
 
-_Question: It sounds like we are updating; are you sure this is also really creating?_
+> Workers can claim projects created by customers, which moves that project to the worker's list of claimed projects. That claimed project is no longer available for other workers. //UPDATE
 
-_Answer: Yes. When a worker assigns an existing project to himself, a new object is created and stored in the database as a new ProjectAssignment object in the ProjectAssignment table._
+> Workers will be able to complete projects. //FUTURE FEATURE
 
 
 
@@ -47,6 +50,7 @@ _Answer: Yes. When a worker assigns an existing project to himself, a new object
 - CSS
 - HTML
 
+
 ## Installation
 How to install and set up the project. Include any prerequisites or dependencies that need to be installed beforehand.
 
@@ -56,12 +60,12 @@ How to install and set up the project. Include any prerequisites or dependencies
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-4. Navigate to the project directory DOUBLE CHECK TO SEE HOW IT IS CLONED AND WHERE TO SEE CHANGE DIRECTORY INTO...CAPSTONE-BACK-END???? OR NO?:
+3. Navigate to the project directory DOUBLE CHECK TO SEE HOW IT IS CLONED AND WHERE TO SEE CHANGE DIRECTORY INTO...CAPSTONE-BACK-END???? OR NO?:
     ```bash
     cd Capstone-Back-End/client
     ```
 
-5. Install dependencies. This command will download and install all dependencies listed in the package.json file:
+4. Install dependencies. This command will download and install all dependencies listed in the package.json file:
     ```bash
     npm install
     ```
