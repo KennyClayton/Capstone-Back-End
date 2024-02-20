@@ -1,6 +1,15 @@
 # Full Stack Application for my Capstone Project
 Name of Project: DudeWorkIt
 
+## Table of Contents
+- [Description](#description)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Description
 This project is designed to be used by two types of users: workers and customers.
 
@@ -25,13 +34,6 @@ _Customer users_
 
 > Customers are able to create new projects for workers to see and claim as their own.
 
-## Table of Contents
-- [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Technologies
 - .NET
