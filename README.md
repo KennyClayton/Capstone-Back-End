@@ -1,4 +1,5 @@
-# Full Stack Application for my Capstone Project
+# Capstone Project
+Full Stack Application
 
 ## Table of Contents
 - [Description](#description)
