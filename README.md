@@ -70,21 +70,30 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
     ```bash
     npm install
     ```
-5. Navigate back to the project directory:
-    ```bash
-   cd ..
-   ```
 
 ## Usage
 
 **To start the application:**
-1. From the client folder, run this command to locate the package.json file and start the server:
+
+1. Navigate up to the project directory (Capstone-Back-End):
+    ```bash
+   cd ..
+   ```
+2. Run this command to open up the project in VSCode:
+   ```bash
+   code .
+   ```
+3. From Git Bash again, navigate back to the client folder:
+    ```bash
+    cd client
+    ```
+4. Run this command to locate the package.json file and start the server:
     
    ```bash
    npm start
    ```
-2. From VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
-3. The application should open in your default browser at `http://localhost:3000/login`
+5. From VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
+6. The application should open in your default browser at `http://localhost:3000/login`
 
 ## Contributing
 Guidelines for others who may want to contribute to this project. Include information about how they can submit bug reports, suggest improvements, or contribute code.
