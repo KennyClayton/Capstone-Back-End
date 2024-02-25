@@ -74,6 +74,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 ## Usage
 
 **To start the application:**
+
    From the client folder, run this command, which will locate the package.json file and start the server:
    ```bash
    npm start
