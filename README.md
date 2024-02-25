@@ -71,6 +71,9 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
     npm install
     ```
 
+5. From VS Code's Activity Bar on the left, click Extensions and install the C# extension: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+
+ 
 ## Usage
 
 **To start the application:**
