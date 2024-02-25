@@ -74,17 +74,17 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 ## Usage
 
 **To start the application:**
-
-   From the client folder:
+1. From the client folder:
    Run this command, which will locate the package.json file and start the server:
     
    ```bash
    npm start
    ```
-   
-   From VSCode:
+2. From VSCode:
    Navigate to the "Run and Debug" button
+   
    Click the play button to "Start Debugging"
+   
    The application should open in your default browser at `http://localhost:3000/login`
 
 ## Contributing
