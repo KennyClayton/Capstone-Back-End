@@ -56,12 +56,12 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 How to install and set up the project. Include any prerequisites or dependencies that need to be installed beforehand.
 
 1. Download and install Node.js from here: https://nodejs.org/en/download
-2. Clone the repository by running this command:
+2. Clone the repository by opening a command prompt and running this command:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-3. Navigate to the project directory DOUBLE CHECK TO SEE HOW IT IS CLONED AND WHERE TO SEE CHANGE DIRECTORY INTO...CAPSTONE-BACK-END???? OR NO?:
+3. Navigate to the project directory with this command:
     ```bash
     cd Capstone-Back-End/client
     ```
