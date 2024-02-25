@@ -66,7 +66,7 @@ To run this application on your device, you'll need to install Git and Node.js f
     cd Capstone-Back-End/client
     ```
 
-3. FinallyInstall dependencies. This command will download and install all dependencies listed in the package.json file:
+3. Finally, download and install all dependencies:
     ```bash
     npm install
     ```
