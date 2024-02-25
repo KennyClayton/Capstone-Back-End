@@ -52,9 +52,9 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 - HTML
 
 
-## Installations and Startup
+## Installations
 
-To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download
+**To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download**
 
 1. Next, clone the repository by opening Git Bash and running this command:
     ```bash
@@ -72,14 +72,11 @@ To run this application on your device, you'll need to install Git and Node.js f
     ```
 
 ## Usage
-Explain how to use your application. Provide examples and describe any commands or inputs users need to know.
 
 **To start the application:**
-   From Bash:
-       navigate to the client folder
-       Run this command, which will locate the package.json file and start the server:
+   From the client folder, run this command, which will locate the package.json file and start the server:
    ```bash
-   _npm start_
+   npm start
    ```
    
    From VSCode:
