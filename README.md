@@ -54,22 +54,26 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 ## Installations
 
-**To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download**
+1. To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download**
 
-1. Next, clone the repository by opening Git Bash and running this command:
+2. After Git and Node.js are installed, clone the repository by opening Git Bash and running this command:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-2. Then navigate to the project directory with this command:
+3. Then navigate to the client folder within the project directory with this command:
     ```bash
     cd Capstone-Back-End/client
     ```
 
-3. Finally, download and install all dependencies:
+4. Download and install all dependencies:
     ```bash
     npm install
     ```
+5. Navigate back to the project directory:
+    ```bash
+   cd ..
+   ```
 
 ## Usage
 
