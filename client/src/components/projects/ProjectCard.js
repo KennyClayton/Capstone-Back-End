@@ -38,7 +38,7 @@ export default function ProjectCard({
           onClick={() => {
             setProject(project);
             setDetailsProjectId(project.id);
-            navigate(`projects/${project.id}`);
+            navigate(`/dashboard/projects/${project.id}`);
             window.scrollTo({
               top: 0,
               left: 0,
@@ -50,5 +50,5 @@ export default function ProjectCard({
         </Button>
       </CardBody>
     </Card>
-  );
+  ); 
 }

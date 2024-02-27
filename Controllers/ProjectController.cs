@@ -134,6 +134,7 @@ public class ProjectController : ControllerBase
     {
         // find the project by Id and store it in a variable
         Project projectToUpdate = _dbContext.Projects
+        
         // .Include(p => p.ProjectType)
         .SingleOrDefault(p => p.Id == id);
         if (projectToUpdate == null)

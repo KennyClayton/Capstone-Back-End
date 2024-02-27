@@ -16,28 +16,36 @@ import "./auth/Login.css";
 import { logout } from "../managers/authManager";
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
+
   const [open, setOpen] = useState(false);
 
   // const toggleNavbar = () => setOpen(!open);
 
+// if (!loggedInUser) {
+//   return null;
+// }
+
   return (
     <div>
       <Navbar color="info" light fixed="true" expand="lg">
+        {/* The NavbarBrand element is only affecting the left side of my Nav bar*/}
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-          {/* 📚 👷 DudeWorkIt 🔨 🎓  */}
           <div className="logo-container">
             <img src={DudeWorkItLogo} alt="Logo" className="sizeDownLogo" />
           </div>
-        {loggedInUser ? (
-          <span style={{ marginLeft: '20px' }}>Welcome, {loggedInUser.fullName}</span>
+          {loggedInUser ? (
+            <span style={{ marginLeft: "20px" }}>
+              Welcome, {loggedInUser.fullName}
+            </span>
           ) : null}
-          </NavbarBrand>
+        </NavbarBrand>
+
         {loggedInUser ? (
           <>
             {/* <NavbarToggler onClick={toggleNavbar} /> */}
-            <Collapse isOpen={open} navbar>
+            {/* <Collapse isOpen={open} navbar>
               <Nav navbar></Nav>
-            </Collapse>
+            </Collapse> */}
             <Button
               color="light"
               outline
@@ -54,15 +62,20 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
               Logout
             </Button>
           </>
-        ) : (
-          <Nav navbar>
-            <NavItem>
-              <NavLink tag={RRNavLink} to="/login">
-                <Button color="primary">Login</Button>
-              </NavLink>
-            </NavItem>
-          </Nav>
-        )}
+        ) 
+        // this ternary colon below says if the above loggedInUser (line 39 or so) is falsey, meaning no one is logged in...then do the next piece of code here below
+        : 
+        (
+          null
+          // <Nav navbar>
+          //   <NavItem>
+          //     <NavLink tag={RRNavLink} to="/login">
+          //       <Button color="primary">Login</Button>
+          //     </NavLink>
+          //   </NavItem>
+          // </Nav>
+        )
+        }
       </Navbar>
     </div>
   );

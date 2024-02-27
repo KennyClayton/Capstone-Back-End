@@ -25,7 +25,7 @@ public class UserProfileController : ControllerBase // "This line declares a C# 
     // [Authorize]
     public IActionResult Get() // this method is being applied to the handler below
     {
-        return Ok(_dbContext.UserProfiles.ToList());
+        return Ok(_dbContext.UserProfiles.ToList()); 
     }
 
     [HttpGet("withworkerroles")] // Return a list of userprofiles

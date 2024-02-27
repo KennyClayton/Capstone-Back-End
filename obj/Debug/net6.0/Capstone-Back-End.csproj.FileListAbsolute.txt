@@ -14,7 +14,6 @@ C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Capstone-Back
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Capstone-Back-End.deps.json
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Capstone-Back-End.runtimeconfig.json
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Capstone-Back-End.dll
-C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\ref\Capstone-Back-End.dll
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Capstone-Back-End.pdb
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Humanizer.dll
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -38,3 +37,10 @@ C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\Capstone-Back
 C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\Capstone-Back-End.genruntimeconfig.cache
 c:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\package-lock.json
 c:\Users\kenny\workspace\csharp\Capstone-Back-End\bin\Debug\net6.0\package.json
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\Capstone-Back-End.sourcelink.json
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\staticwebassets\msbuild.Capstone-Back-End.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\staticwebassets\msbuild.build.Capstone-Back-End.props
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Capstone-Back-End.props
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Capstone-Back-End.props
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\kenny\workspace\csharp\Capstone-Back-End\obj\Debug\net6.0\refint\Capstone-Back-End.dll
