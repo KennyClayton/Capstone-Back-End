@@ -5,7 +5,6 @@ Full Stack Application
 - [Description](#description)
 - [Technologies](#technologies)
 - [Try It Out!](#try-it-out)
-- [License](#license)
 
 
 ## Description
@@ -72,39 +71,47 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 **To start the application:**
 
-In the top-level directory (Capstone-back-end), run each of these commands in order:
+6. In the top-level directory (Capstone-back-end), run each of these commands in order:
     ```bash
     dotnet user-secrets init
     ```
+    
     ```bash
     dotnet user-secrets set AdminPassword password
     ```
+    
     ```bash
     dotnet user-secrets set DudeWorkItDbConnectionString 'Host=localhost;Port=5432;Username=postgres;Password=password;Database=DudeWorkIt'
     ```
-    ```bash
+
+   ```bash
     dotnet restore
     ```
+
     ```bash
     dotnet build
     ```
+
     ```bash
     dotnet ef migrations add InitialCreate
     ```
+
     ```bash
     dotnet ef database update
     ```
+
     ```bash
     cd client
     ```
+
     ```bash
     npm install (MAY NOT NEED THIS LINE SINCE ALREADY INSTALLED ABOVE)
     ```
+
 **Test the Setup**
 
-In VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
-
-From the client folder run this command to locate the package.json file and start the server:
+1. In VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
+2. From the client folder run this command to locate the package.json file and start the server:
     ```bash
     run npm start
     ``` 
@@ -115,9 +122,3 @@ Attempt to login with admina@skyroutes.com and the password you set the value of
 
 If the setup succeeded, the application should open in your default browser at `http://localhost:3000/login` and you should see navbar links and logout button.
 
-
-
-
-
-## License
-    No license.
