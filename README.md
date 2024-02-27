@@ -70,19 +70,53 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 5. From VS Code's Activity Bar on the left, click Extensions and install the C# extension: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
 
- 
-## Usage
-
 **To start the application:**
 
-1. From the client folder run this command to locate the package.json file and start the server:
-    
-   ```bash
-   npm start
-   ```
-2. In VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
+In the top-level directory (Capstone-back-end), run each of these commands in order:
+    ```bash
+    dotnet user-secrets init
+    ```
+    ```bash
+    dotnet user-secrets set AdminPassword password
+    ```
+    ```bash
+    dotnet user-secrets set DudeWorkItDbConnectionString 'Host=localhost;Port=5432;Username=postgres;Password=password;Database=DudeWorkIt'
+    ```
+    ```bash
+    dotnet restore
+    ```
+    ```bash
+    dotnet build
+    ```
+    ```bash
+    dotnet ef migrations add InitialCreate
+    ```
+    ```bash
+    dotnet ef database update
+    ```
+    ```bash
+    cd client
+    ```
+    ```bash
+    npm install (MAY NOT NEED THIS LINE SINCE ALREADY INSTALLED ABOVE)
+    ```
+**Test the Setup**
 
-The application should open in your default browser at `http://localhost:3000/login`
+In VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
+
+From the client folder run this command to locate the package.json file and start the server:
+    ```bash
+    run npm start
+    ``` 
+
+You should see the login view when the UI opens.
+
+Attempt to login with admina@skyroutes.com and the password you set the value of AdminPassword to in the user-secrets
+
+If the setup succeeded, the application should open in your default browser at `http://localhost:3000/login` and you should see navbar links and logout button.
+
+
+
 
 
 ## License
