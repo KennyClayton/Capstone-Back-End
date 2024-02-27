@@ -4,7 +4,7 @@ Full Stack Application
 ## Table of Contents
 - [Description](#description)
 - [Technologies](#technologies)
-- [Try It Out!](#tryitout!)
+- [Try It Out!](#try-it-out)
 - [License](#license)
 
 
