@@ -69,8 +69,8 @@ export default function ProjectDetails({ project, setProject, }) {
     deleteProjectById(project.id)
       .then((response) => {
         if (response.status === 204) {
-          // Deletion was successful, navigate to the root or home page
-          navigate("/"); // Replace with the correct route
+          // Deletion was successful, navigate to the dashboard
+          navigate("/dashboard"); // Replace with the correct route
         } else {
           // Handle errors if needed
         }
@@ -98,7 +98,7 @@ export default function ProjectDetails({ project, setProject, }) {
   };
 
   const handleMyProjectsButton = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   //^ ----------- VIEW MODE -----------//^

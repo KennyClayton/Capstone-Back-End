@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8dH3OMPL9+8pxnlRcppslviBA6+eL662mwZ8gXvkL4pPCYoxR5EJGY5VgfjnZwe349J2jkrayx5bd3HL6HYmUw==",
+  "dgSpecHash": "MO+owioYqbkea6ds2Jv3soUdCshKxNOwuv+p0j1CuDhwj1p5/FaZiFL3nCDuFzRlT9AU8ZX3Ydezkr7arD14jw==",
   "success": true,
   "projectFilePath": "C:\\Users\\kenny\\workspace\\csharp\\Capstone-Back-End\\Capstone-Back-End.csproj",
   "expectedPackageFiles": [
@@ -34,7 +34,11 @@
     "C:\\Users\\kenny\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
     "C:\\Users\\kenny\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\kenny\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
-    "C:\\Users\\kenny\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    "C:\\Users\\kenny\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\kenny\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\kenny\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\kenny\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.25\\microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\kenny\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.25\\microsoft.netcore.app.host.win-x64.6.0.25.nupkg.sha512"
   ],
   "logs": []
 }

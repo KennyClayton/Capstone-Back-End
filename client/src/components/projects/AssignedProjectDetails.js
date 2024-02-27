@@ -17,7 +17,7 @@ export default function AssignedProjectDetails({ project, setProject, projectAss
   const { id } = useParams();
   const navigate = useNavigate();
   const handleMyProjectsButton = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
 return (

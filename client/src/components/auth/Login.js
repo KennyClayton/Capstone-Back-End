@@ -18,7 +18,7 @@ export default function Login({ setLoggedInUser }) {
         setFailedLogin(true);
       } else {
         setLoggedInUser(user);
-        navigate("/");
+        navigate("/dashboard");
       }
     });
   };

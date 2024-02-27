@@ -17,6 +17,7 @@ export const getUserProjects = () => {
   return fetch(`${apiUrl}/user-projects`).then((res) => res.json());
 };
 
+
 //^4 POST - Create a new project
 export const createProject = (project) => {
   return fetch(apiUrl, {
