@@ -4,8 +4,7 @@ Full Stack Application
 ## Table of Contents
 - [Description](#description)
 - [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Try It Out!](#tryitout)
 - [Contributing](#contributing)
 - [License](#license)
 
