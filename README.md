@@ -6,7 +6,6 @@ Full Stack Application
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -52,7 +51,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 - HTML
 
 
-## Installations
+## Try it out!
 
 1. To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download**
 
@@ -66,7 +65,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
     cd Capstone-Back-End/client
     ```
 
-4. Download and install all dependencies:
+4. Run this command to download and install all dependencies:
     ```bash
     npm install
     ```
@@ -78,35 +77,15 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 **To start the application:**
 
-1. Navigate up to the project directory (Capstone-Back-End):
-    ```bash
-   cd ..
-   ```
-2. Run this command to open up the project in VSCode:
-   ```bash
-   code .
-   ```
-3. From Git Bash again, navigate back to the client folder:
-    ```bash
-    cd client
-    ```
-4. Run this command to locate the package.json file and start the server:
+1. From the client folder run this command to locate the package.json file and start the server:
     
    ```bash
    npm start
    ```
-5. From VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
-6. The application should open in your default browser at `http://localhost:3000/login`
+2. In VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
 
-## Contributing
-Guidelines for others who may want to contribute to this project. Include information about how they can submit bug reports, suggest improvements, or contribute code.
+The application should open in your default browser at `http://localhost:3000/login`
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Make your changes.
-4. Commit your changes (`git commit -am 'Add new feature'`).
-5. Push to the branch (`git push origin feature/your-feature`).
-6. Create a new Pull Request.
 
 ## License
     No license.
