@@ -50,6 +50,8 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 ## Try it out!
 
+**Installations:**
+
 1. To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download**
 
 2. After Git and Node.js are installed, clone the repository by opening Git Bash and running this command:
@@ -68,6 +70,8 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
     ```
 
 5. From VS Code's Activity Bar on the left, click Extensions and install the C# extension: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+
+
 
 **To start the application:**
 
