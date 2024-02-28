@@ -132,7 +132,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 You should see the login view when the UI opens.
 
-Attempt to login with admina@skyroutes.com and the password you set the value of AdminPassword to in the user-secrets
+Attempt to login with cody@jones.com and "password" for the password
 
-If the setup succeeded, the application should open in your default browser at `http://localhost:3000/login` and you should see navbar links and logout button.
+If the setup succeeded, the application should open in your default browser at `http://localhost:3000/dashboard` and you should see navbar links and logout button.
 
