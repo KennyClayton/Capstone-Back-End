@@ -78,7 +78,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 6. In the top-level directory (Capstone-back-end), run each of these commands:
 
     ```bash
-    dotnet tool install --global dotnet-ef
+    dotnet tool install --global dotnet-ef --version 8.0.2
     ```
     
     ```bash
