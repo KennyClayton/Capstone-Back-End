@@ -58,7 +58,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 3. Install .NET Runtime 8.0.2 or later from https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime?cid=getdotnetcore&os=windows&arch=x64
 
-4. After Git and Node.js are installed, clone the repository by opening Git Bash and running this command:
+4. Clone the repository by opening Git Bash and running this command:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
