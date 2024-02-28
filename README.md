@@ -52,24 +52,28 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 **Installations:**
 
-1. To run this application on your device, you'll need to install Git and Node.js from https://git-scm.com/ and https://nodejs.org/en/download**
+1. Install Git from https://git-scm.com/
 
-2. After Git and Node.js are installed, clone the repository by opening Git Bash and running this command:
+2. Install Node.js from https://nodejs.org/en/download
+
+3. Install .NET Runtime 8.0.2 or later from https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime?cid=getdotnetcore&os=windows&arch=x64
+
+4. After Git and Node.js are installed, clone the repository by opening Git Bash and running this command:
     ```bash
     git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
-3. Then navigate to the client folder within the project directory with this command:
+5. Then navigate to the client folder within the project directory with this command:
     ```bash
     cd Capstone-Back-End/client
     ```
 
-4. Run this command to download and install all dependencies:
+6. Run this command to download and install all dependencies:
     ```bash
     npm install
     ```
 
-5. From VS Code's Activity Bar on the left, click Extensions and install the C# extension: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+7. From VS Code's Activity Bar on the left, click Extensions and install the C# extension: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
 
 
 
