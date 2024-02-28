@@ -75,7 +75,12 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 **To start the application:**
 
-6. In the top-level directory (Capstone-back-end), run each of these commands in order:
+6. In the top-level directory (Capstone-back-end), run each of these commands:
+
+    ```bash
+    dotnet tool list --global
+    ```
+    
     ```bash
     dotnet user-secrets init
     ```
@@ -115,6 +120,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 **Test the Setup**
 
 1. In VSCode, Click the "Run and Debug" button on the Activity Bar to "Start Debugging"
+
 2. From the client folder run this command to locate the package.json file and start the server:
     ```bash
     run npm start
