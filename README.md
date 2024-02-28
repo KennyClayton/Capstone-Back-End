@@ -56,7 +56,7 @@ _Answer: When a worker assigns an existing project to himself, a new _ProjectAss
 
 2. After Git and Node.js are installed, clone the repository by opening Git Bash and running this command:
     ```bash
-    git clone git@github.com:KennyClayton/Capstone-Back-End.git
+    git clone https://github.com/KennyClayton/Capstone-Back-End.git
     ```
 
 3. Then navigate to the client folder within the project directory with this command:
