@@ -72,7 +72,7 @@ export const getProjectTypes = () => {
 
 
 
-//^ ---------- FUNCTIONS for ProjectAssignments ---------- //^
+//^ ---------- FUNCTIONS for ProjectAssignments ---------- //^ 
 //$ ---------- FUNCTIONS for ProjectAssignments ---------- //$
 //~ ---------- FUNCTIONS for ProjectAssignments ---------- //~
 

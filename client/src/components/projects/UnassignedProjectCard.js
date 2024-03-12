@@ -45,6 +45,7 @@ export default function UnassignedProjectCard({
     <Card body color="info" style={{ marginBottom: "1rem", maxWidth: "400px" }}>
       <CardBody>
         <CardTitle tag="h5">
+          {/* firstly, we reference the exact pa and dot notate to get to the project type and then the name property */}
           {unassignedProjectAssignment.projectType.name}
         </CardTitle>
         <CardText>

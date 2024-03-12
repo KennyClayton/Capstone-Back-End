@@ -7,6 +7,8 @@ using System.Security.Claims;
 
 namespace DudeWorkIt.Controllers;
 
+//* This Controller ASSEMBLES the data from the database and stores it in an "endpoint" and then the projectManager.js file FETCHES or comes to pick up the little boxes of assembled data when called to do so.
+
 [ApiController]
 [Route("api/[controller]")]
 //# all of the endpoints in this controller will have URLs that start with "/api/project" (it is case insensitive?)
@@ -149,6 +151,18 @@ public class ProjectController : ControllerBase
         projectToUpdate.DateOfProject = project.DateOfProject;
         projectToUpdate.Description = project.Description; // the new description value will go into the project.Description value
 
+        _dbContext.SaveChanges(); 
+        
+        // now update the corresponding projectAssignment...I need the projectId from the above project to reference below
+        //in the next line I am trying to capture the Id of the project which the Customer is updating, but I may be able to do that with the lines of code below that instead...?
+        // var paId = projectToUpdate.Id; //the "paId" variable should now hold the same integer as the Id of the project the Customer just updated above
+        // ok, now below I will get the same projectAssignment object that corresponds to the matching project and then store it in the projectAssignmentToUpdate variable
+        ProjectAssignment projectAssignmentToUpdate = _dbContext.ProjectAssignments
+        .SingleOrDefault(pa => pa.ProjectId == id);
+        //Now take that object in the database and update its ProjectTypeId to match the project's ProjectTypeId
+        // Console.WriteLine("HERE I AM:" + id);
+        projectAssignmentToUpdate.ProjectType = project.ProjectType;
+        // Console.WriteLine("HERE I AM AGAIN:" + project.ProjectType.Name);
         _dbContext.SaveChanges();
         return NoContent();
     }
@@ -236,13 +250,14 @@ public class ProjectAssignmentController : ControllerBase
 
     //^10 GET - This endpoint will fetch a list of all projectAssignments with no UserProfile value (unassigned)
     [HttpGet("unassigned-worker-projects")] //# this endpoint on the server is "/api/projectassignment/unassigned-worker-projects"
-    public IActionResult getAllUnassignedProjectAssignments()
+    public IActionResult getAllUnassignedProjectAssignments() //! I think I need to make sure the ProjectTypeId gets up
     {
         var unassignedProjectAssignments = _dbContext.ProjectAssignments
             .Include(pa => pa.UserProfile)
             .Include(pa => pa.Project)
                 .ThenInclude(p => p.UserProfile)
             .Include(pa => pa.ProjectType)
+            //.Include(pa => pa.ProjectType) //! I am commenting this out because I don't think I need to retrieve this again...and I have realized I don't need this colun in the projectAssignments table at all!!! There is no reason to fetch the projectType from the list/table of projectAssignments...I already have the projectType under the list of projects....AND, importantly, the Customers who collectively generate that list of projects are the ones who update those details....and those updates are always reflected in the projects list...so there is no reason to separately list the projectAssignmentType under the projectAssignemnts list/table and then force myself to update that table and then fetch it .... that's pointless. I am guessing this is some sort of principle in programming where you keep a single source of truth and limit how many ways to get a piece of data.
             .Where(pa => pa.UserProfile == null)
             .ToList();
         return Ok(unassignedProjectAssignments);
