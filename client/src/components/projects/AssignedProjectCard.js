@@ -139,7 +139,7 @@ export default function ProjectAssignmentCard({
               type="select"
               name="worker"
               id="worker"
-              // value={selectedWorker} //the code didn'e woth this way, so created it in the next line of code
+              // value={selectedWorker} //the code didn't work this way, so created it in the next line of code
               onChange={(e) => {
                 const selectedWorker = workerProfiles.find(
                   (wp) => wp.id === parseInt(e.target.value)

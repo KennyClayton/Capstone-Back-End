@@ -1,4 +1,4 @@
-namespace DudeWorkIt.Models;
+namespace DudeWorkIt.Models; 
 
 public class Project
 {

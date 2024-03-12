@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace DudeWorkIt.Models;
+
+namespace DudeWorkIt.Models; 
 
 public class UserProfile
 {
